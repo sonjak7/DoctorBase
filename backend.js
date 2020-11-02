@@ -20,6 +20,11 @@ app.get('/',function(req,res){
   res.render('home');
 });
 
+app.get('/delete',function(req,res){
+  res.render('delete');
+});
+
+
 app.get('/inquire',function(req,res){
   res.render('inquire');
 });
@@ -30,10 +35,6 @@ app.get('/initiate',function(req,res){
 
 app.get('/update',function(req,res){
   res.render('update');
-});
-
-app.get('/delete',function(req,res){
-  res.render('delete');
 });
 
 app.use(function(req,res){
