@@ -32,6 +32,10 @@ app.get('/update',function(req,res){
   res.render('update');
 });
 
+app.get('/delete',function(req,res){
+  res.render('delete');
+});
+
 app.use(function(req,res){
   res.status(404);
   res.render('404');
