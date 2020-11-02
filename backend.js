@@ -11,7 +11,7 @@ app.engine("handlebars", handlebars.engine);
 app.set("view engine", "handlebars");
 
 // set the port number for the URL
-app.set("port", 14990);
+app.set("port", 7020);
 
 // sets the folder from which static files such as images and css code are used
 app.use(express.static('public'));
