@@ -1,13 +1,20 @@
-var express = require('express');
-//var mysql = require('./dbcon.js');
+// using express module to create express application
+var express = require("express");
 
 var app = express();
-var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 
+// set main.handlebars as the default layout
+var handlebars = require("express-handlebars").create({defaultLayout:"main"});
+
+// handlebar.engine handles everything with .handlebars extension
+app.engine("handlebars", handlebars.engine);
+app.set("view engine", "handlebars");
+
+// set the port number for the URL
+app.set("port", 14990);
+
+// sets the folder from which static files such as images and css code are used
 app.use(express.static('public'));
-app.engine('handlebars', handlebars.engine);
-app.set('view engine', 'handlebars');
-app.set('port', 7020);
 
 app.get('/',function(req,res){
   res.render('home');
