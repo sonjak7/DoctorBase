@@ -21,9 +21,8 @@ app.get('/',function(req,res){
 });
 
 app.get('/delete',function(req,res){
-  res.render('delete');
+  res.render('inquire');
 });
-
 
 app.get('/inquire',function(req,res){
   res.render('inquire');
