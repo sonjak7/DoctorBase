@@ -28,9 +28,46 @@ app.get('/inquire',function(req,res){
   res.render('inquire');
 });
 
-app.get('/initiate',function(req,res){
-  res.render('initiate');
+app.get('/inquire_doctors',function(req,res){
+  res.render('inquire_doctors');
 });
+
+app.get('/inquire_patients',function(req,res){
+  res.render('inquire_patients');
+});
+
+app.get('/inquire_orders',function(req,res){
+  res.render('inquire_orders');
+});
+
+app.get('/inquire_results',function(req,res){
+  res.render('inquire_results');
+});
+
+app.get('/inquire_staff',function(req,res){
+  res.render('inquire_staff');
+});
+
+app.get('/add',function(req,res){
+  res.render('add');
+});
+app.get('/add_doctors',function(req,res){
+  res.render('add_doctors');
+});
+app.get('/add_patients',function(req,res){
+  res.render('add_patients');
+});
+app.get('/add_orders',function(req,res){
+  res.render('add_orders');
+});
+app.get('/add_staff',function(req,res){
+  res.render('add_staff');
+});
+app.get('/add_results',function(req,res){
+  res.render('add_results');
+});
+
+
 
 app.get('/update',function(req,res){
   res.render('update');
