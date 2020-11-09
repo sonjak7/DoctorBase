@@ -1,0 +1,44 @@
+<form id="create">
+  <fieldset>
+    <legend>Initiate Order</legend>
+    <fieldset>
+      <legend>
+      Patient's Information
+      </legend>
+      <label>First Name:</label>
+      <input type="text" name="name" id="name" size="30" maxlength="100">
+      <label><br />Last Name:</label>
+      <input type="text" name="name" id="name" size="30" maxlength="100">
+      <br />
+      <label>ID:</label>
+      <input type="number" name="reps" id="reps" size="30" maxlength="100">
+    </fieldset>
+    <br />
+    <fieldset>
+      <label>Doctor ID:</label>
+      <input type="number" name="reps" id="reps" size="30" maxlength="100">
+    </fieldset>
+    <br />
+    <fieldset>
+      <label>Order Type:
+        <select name="cars" id="cars">
+    <option value="None">None</option>
+    <option value="Blood Test">Blood Test</option>
+    <option value="X-Ray">X-Ray</option>
+    <option value="Prescription">Prescription</option>
+  </select>
+      </label>
+    </fieldset>
+    <br />
+    <fieldset>
+      <label>Date:</label>
+      <input type="date" name="date" id="date">
+    </fieldset>
+    <br/>
+    <textarea type="text" rows="4" cols="50" name="comment" form="usrform"
+      placeholder="Additional Order Instructions"></textarea><br/>
+    <input class="bottom_button" type="submit" value="Add Order" id="submit"/>
+    <a class="bottom_button" href="./">Return to Main Page</a>
+    <a class="bottom_button" href="./add">Add Something Else</a>
+ </fieldset>
+</form>
