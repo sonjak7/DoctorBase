@@ -3,7 +3,7 @@
 #change this line to run the app that you want to run
 #from db_connector.sample import app
 #for example, the above line tells to run the sample db connection app in db_connector/ directory
-from HospitalBase.backend import webapp
+from hospital_base.backend import webapp
 #from step0.webapp import webapp
 
 #then from the commandline run:
