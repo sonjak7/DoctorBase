@@ -1,0 +1,36 @@
+<head>
+  <title>Doctors/Patients/Orders/Staff/Results</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<img src="styles/bus.jpg"> <!-- RETRIEVED FROM: https://www.ohsu.edu/visit/patient-trip-options -->
+
+<ul id="nav_bar">
+    <li id="site_name">HospitalBase</li>
+</ul>
+
+<form id="create">
+  <fieldset>
+    <legend>Add Results</legend>
+    <fieldset>
+      <label>Order ID:</label>
+      <input type="number" name="reps" id="reps" size="30" maxlength="100"required>
+    </fieldset>
+    <br />
+    <fieldset>
+      <label>Staff ID:</label>
+      <input type="number" name="reps" id="reps" size="30" maxlength="100"required>
+    </fieldset>
+    <br />
+    <fieldset>
+      <label>Status:</label>
+      <input type="radio" name="status" value="Complete" /> Done
+      <input type="radio" name="status" value="Processing" /> Incomplete
+      <input type="radio" name="status" value="Accessed" /> Accessed By Physician
+    </fieldset>
+    <br />
+    <input class="bottom_button" type="submit" value="Add Result" id="add_res"/>
+    <a class="bottom_button" href="home.html">Return to Main Page</a>
+    <a class="bottom_button" href="add.html">Add Something Else</a>
+ </fieldset>
+</form>
