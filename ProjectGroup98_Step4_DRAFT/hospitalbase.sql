@@ -25,7 +25,6 @@ CREATE TABLE `staff` (
   `stafftype` varchar(255) NOT NULL,
   `lastname` varchar(255) NOT NULL,
   `firstname` varchar(255) NOT NULL,
-  `primarydoctorid` int(11) NOT NULL,
   PRIMARY KEY (`staffid`)
 );
 
@@ -54,7 +53,7 @@ CREATE TABLE `orders` (
   `ordertype` varchar(255) NOT NULL,
   `patientid` int(11) NOT NULL,
   `doctorid` int(11) NOT NULL,
-  `staffid` int(11) NOT NULL,
+  `staffid` int(11) NULL,
   PRIMARY KEY (`orderid`),
   FOREIGN KEY (`patientid`) REFERENCES `patients` (`patientid`),
   FOREIGN KEY (`doctorid`) REFERENCES `doctors` (`doctorid`),
@@ -65,7 +64,7 @@ CREATE TABLE `orders` (
 
 DROP TABLE IF EXISTS `results`;
 
-CREATE TABLE `orders` (
+CREATE TABLE `results` (
   `resultid` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(255) NOT NULL,
   `orderid` int(11) NOT NULL,
@@ -114,11 +113,11 @@ UNLOCK TABLES;
 
 LOCK TABLES `orders` WRITE;
 INSERT INTO `orders` VALUES
-(1,2020-11-12,08:30:00, 'prescription', 1, 4, 4),
-(2,2020-11-12,08:30:00, 'blood tests', 2, 2, 1),
-(3,2020-11-12,08:30:00, 'prescription', 3, 5, 5),
-(4,2020-11-12,08:30:00, 'x-ray', 4, 3, 3),
-(5,2020-11-12,08:30:00, 'vitals', 5, 1, 2);
+(1,'2020-11-12','08:30:00', 'prescription', 1, 4, 4),
+(2,'2020-11-12','08:30:00', 'blood tests', 2, 2, 1),
+(3,'2020-11-12','08:30:00', 'prescription', 3, 5, 5),
+(4,'2020-11-12','08:30:00', 'x-ray', 4, 3, 3),
+(5,'2020-11-12','08:30:00', 'vitals', 5, 1, 2);
 UNLOCK TABLES;
 
 
@@ -126,9 +125,9 @@ UNLOCK TABLES;
 
 LOCK TABLES `results` WRITE;
 INSERT INTO `results` VALUES
-(1,'fulfilled', 1, 2020-11-15, ''),
-(2,'pending: patient visit', 2, 2020-11-15, ''),
-(3,'pending: order received', 3, 2020-11-15, ''),
-(4,'fulfilled', 4, 2020-11-15, ''),
-(5,'fulfilled', 5, 2020-11-15, '');
+(1,'fulfilled', 1, '2020-11-15', ''),
+(2,'pending: patient visit', 2, '2020-11-15', ''),
+(3,'pending: order received', 3, '2020-11-15', ''),
+(4,'fulfilled', 4, '2020-11-15', ''),
+(5,'fulfilled', 5, '2020-11-15', '');
 UNLOCK TABLES;
