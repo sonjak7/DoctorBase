@@ -1,0 +1,49 @@
+<head>
+  <title>Doctors/Patients/Orders/Staff/Results</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+
+<img src="styles/bus.jpg"> <!-- RETRIEVED FROM: https://www.ohsu.edu/visit/patient-trip-options -->
+
+<ul id="nav_bar">
+    <li id="site_name">HospitalBase</li>
+</ul>
+
+<form id="Update">
+  <fieldset>
+    <legend>Update Order</legend>
+    <fieldset>
+      <legend>
+      Order Information
+      </legend>
+      <label>Order ID:</label>
+      <input type="number" name="reps" id="reps" size="30" maxlength="100">
+    </fieldset>
+    <br />
+    <fieldset>
+      <label>Staff ID:</label>
+      <input type="number" name="reps" id="reps" size="30" maxlength="100">
+    </fieldset>
+    <br />
+    <fieldset>
+      <label>Order Type:
+        <select name="cars" id="cars">
+    <option value="None">None</option>
+    <option value="Blood Test">Blood Test</option>
+    <option value="X-Ray">X-Ray</option>
+    <option value="Prescription">Prescription</option>
+  </select>
+      </label>
+    </fieldset>
+    <br />
+    <fieldset>
+      <label>Completion Date:</label>
+      <input type="date" name="date" id="date">
+    </fieldset>
+    <br/>
+    <textarea rows="4" cols="50" name="comment" form="usrform"
+    placeholder="Comments"></textarea><br/>
+    <input class="bottom_button" type="submit" value="Update Order" id="submit2"/>
+    <a class="bottom_button" href="home.html">Return to Main Page</a>
+ </fieldset>
+</form>

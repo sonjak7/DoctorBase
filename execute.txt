@@ -1,6 +1,10 @@
 Run this code to execute the backend temporarily:
+<<<<<<< HEAD
 (Insert PORT# on line 6)
 
+=======
+(INSERT PORT# on line 6)
+>>>>>>> 286d935606cae703a04655b8cf47dca0e53a2f27
 
 source ./venv/bin/activate
 export FLASK_APP=run.py	
