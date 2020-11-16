@@ -10,6 +10,21 @@ h1{
     font-family: sans-serif;
 }
 
+h2{
+    color: white;
+    text-align: center;
+    margin-left: 0.2%;
+    border-radius: 6px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: 30px;
+    background-color: rgb(62, 78, 88);
+    opacity: 0.9;
+    display: inline;
+    padding: 0.6%;
+    padding-bottom: 0.2%;
+}
+
 #site_name{
     font-size: 60px;
     color: rgb(248, 248, 248);
@@ -18,22 +33,22 @@ h1{
 a, input[type=submit]{
     text-decoration: none;
     text-align: center;
-    color: white;
-    border: 2px solid rgb(82, 144, 182);
-    background-color: rgb(118, 181, 221);
-}
-
-a:hover, input[type=submit]:hover{
-    background-color: rgb(82, 144, 182);
 }
 
 .home_button{
+    color: white;
+    background-color: rgb(118, 181, 221);
     display: block;
-    width: 30%;
-    font-size: 40px;
-    padding: 1.5%;
+    width: 28%;
+    font-size: 35px;
+    padding: 1%;
     margin: 0.8%;
     border-radius: 18px;
+}
+
+.home_button:hover{
+    background-color: rgb(75, 147, 192);
+    border-color: rgb(75, 147, 192);
 }
 
 #nav_bar{
@@ -84,6 +99,54 @@ form{
     margin-right: 0.2%;
 }
 
+table{
+    color: white;
+    width: 99.6%;
+    background-color: rgb(62, 78, 88);
+    opacity: 0.9;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    padding: 0.8%;
+    margin-left: 0.2%;
+    margin-right: 0.2%;    
+}
+
+td, th{
+    border-radius: 5px;
+    background-color: rgb(48, 60, 68);
+    padding: 1%;
+    text-align: center;
+}
+
+.IDRow{
+    width: 10%;
+}
+
+.modify{
+    width: 7%;
+    padding: 0.5%;
+}
+
+.delete{
+    color: lightcoral;
+    border: 1px solid lightcoral;
+}
+
+.delete:hover{
+    color: white;
+    background-color: lightcoral;
+}
+
+.update{
+    color: rgb(118, 181, 221);
+    border: 1px solid rgb(118, 181, 221);
+}
+
+.update:hover{
+    color: white;
+    background-color: rgb(118, 181, 221);
+}
+
 fieldset{
     border: 1.5px solid black;
     border-radius: 10px;
@@ -104,4 +167,12 @@ textarea, input, select{
     font-size: 20px;
     padding: 0.5%;
     margin: 0.4%;
+    color: rgb(118, 181, 221);
+    background-color: transparent;
+    border: 2px solid rgb(118, 181, 221);
+}
+
+.bottom_button:hover{
+    color: white;
+    background-color: rgb(118, 181, 221);
 }

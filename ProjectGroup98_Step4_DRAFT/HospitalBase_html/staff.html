@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Doctors/Patients/Orders/Staff/Results</title>
+        <link rel="stylesheet" href="styles/style.css">
+    </head>
+    <body>
+        <img src="styles/bus.jpg"> <!-- RETRIEVED FROM: https://www.ohsu.edu/visit/patient-trip-options -->
+
+        <ul id="nav_bar">
+            <li id="site_name">HospitalBase</li>
+        </ul>
+
+        <!-- SEARCH FOR STAFF -->
+        <br><h2>Search for Staff</h2>
+        <form id="Inquire">
+            <fieldset>
+              <legend>Staff Details</legend>
+              <fieldset>
+                <label>First Name:</label>
+                <input type="text" name="reps" id="reps" size="30" maxlength="100" required>
+                <label>Last Name:</label>
+                <input type="text" name="reps" id="reps" size="30" maxlength="100" required>
+              </fieldset>
+              <br />
+              <input class="bottom_button" type="submit" value="Search Staff" id="inq_sta"/>
+           </fieldset>
+        </form>
+
+        
+        <!-- LOOK AT ALL STAFF -->
+        <br><h2>All Staff</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th class="IDRow">Staff ID</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Staff Type</th>
+                    <th colspan="2">Modify</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- body will be filled with data from database, this is temporary data for viewing purposes -->
+                <tr>
+                    <td class="IDRow">10</td>
+                    <td>Pasteur</td>
+                    <td>Louis</td>
+                    <td>Pathology</td>
+                    <td class="modify delete">Delete</td>
+                    <td class="modify update">Update</td>
+                </tr>
+                <tr>
+                    <td class="IDRow">12</td>
+                    <td>Nightingale</td>
+                    <td>Florence</td>
+                    <td>Nursing</td>
+                    <td class="modify delete">Delete</td>
+                    <td class="modify update">Update</td>
+                </tr>
+            </tbody>
+        </table><br>
+
+
+        <!-- ADD NEW STAFF -->
+        <br><h2>Add New Staff</h2>
+        <form id="create">
+            <fieldset>
+                <legend>Staff Details</legend>
+                <fieldset>
+                    <label>First Name:</label>
+                    <input type="text" name="reps" id="reps" size="20" maxlength="100" required>
+                    <label>Last Name:</label>
+                    <input type="text" name="reps" id="reps" size="20" maxlength="100" required>
+                    <label>Type:</label>
+                    <input type="text" name="reps" id="reps" size="20" maxlength="100" required>
+                </fieldset>
+                <br />
+                <input class="bottom_button" type="submit" value="Add Staff" id="add_sta"/>
+            </fieldset>
+        </form>
+
+        <a class="home_button" href="./home.html">Return to Main Page</a>
+
+    </body>
+</html>
