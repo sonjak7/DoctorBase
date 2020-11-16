@@ -131,4 +131,4 @@ DELETE FROM Patients WHERE patientID = :patientIDInput;
 DELETE FROM Staff WHERE staffID = :staffIDInput;
 
 --delete doctor-patient relationship(patient leaves a doctor, vice versa)
-DELETE FROM Doctors_Patients WHERE doctorID = :doctorIDInput AND patientID = :patientIDInput
+DELETE FROM Doctors_Patients WHERE doctorID = :doctorIDInput AND patientID = :patientIDInput;
