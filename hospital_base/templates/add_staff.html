@@ -1,24 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form id="create">
-  <fieldset>
-    <legend>Add Staff</legend>
+
+{% for message in get_flashed_messages() %}
+    <h1>{{ message }}</h1>
+{% endfor %}
+
+<!-- ADD NEW STAFF -->
+<br><h2>Add New Staff</h2>
+<form id="addperson" action="/add_staff" method="post">
     <fieldset>
-      <label>First Name:</label>
-      <input type="text" name="reps" id="reps" size="30" maxlength="100" required>
-      <label>Last Name:</label>
-      <input type="text" name="reps" id="reps" size="30" maxlength="100" required>
+        <legend>Staff Details</legend>
+        <fieldset>
+            <label>First Name:</label>
+            <input type="text" name="fname" required>
+            <label>Last Name:</label>
+            <input type="text" name="lname" required>
+            <label>Type:</label>
+            <input type="text" name="type" required>
+        </fieldset>
+        <br />
+        <input class="bottom_button" type="submit" value="Add Staff" id="add_sta">
     </fieldset>
-    <br />
-    <fieldset>
-      <label>Type:</label>
-      <input type="text" name="reps" id="reps" size="30" maxlength="100" required>
-    </fieldset>
-    <br />
-    <input class="bottom_button" type="submit" value="Add Staff" id="add_sta"/>
-    <a class="bottom_button" href="./">Return to Main Page</a>
-    <a class="bottom_button" href="./add">Add Something Else</a>
- </fieldset>
 </form>
+
+<a class="home_button" href="./">Return to Main Page</a>
+<a class="home_button" href="./staff">Return to Staff Page</a>
+
 {% endblock %}
