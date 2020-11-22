@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <h1>{{ message }}</h1>
+{% endfor %}
+
+<form id="addorders" action="/add_orders" method="post">
+  <fieldset>
+    <legend>Initiate Order</legend>
+    <fieldset>
+      <legend>
+      Patient's Information
+      </legend>
+      <label>First Name:</label>
+      <input type="text" name="pfname" required>
+      <label><br />Last Name:</label>
+      <input type="text" name="plname" required>
+      <br />
+    </fieldset>
+    <br />
+    <fieldset>
+      <legend>
+      Doctor's Information
+      </legend>
+      <label>First Name:</label>
+      <input type="text" name="dfname" required>
+      <label><br />Last Name:</label>
+      <input type="text" name="dlname" required>
+      <br />
+    </fieldset>
+    <br />
+    <fieldset>
+      <label>Order Type:</label>
+        <select name="orderType" id="orderType" required>
+          <option value="">None</option>
+          <option value="Blood Test">Blood Test</option>
+          <option value="X-Ray">X-Ray</option>
+          <option value="Prescription">Prescription</option>
+        </select>
+    </fieldset>
+    <br />
+    <fieldset>
+      <label>Date:</label>
+      <input id="today" type="date" name="date" required>
+      <label>Time:</label>
+      <input id="rightnow" type="time" name="time" required>
+    </fieldset>
+    <br/>
+    <input class="bottom_button" type="submit" value="Add Order" id="submit"/>
+    <a class="bottom_button" href="./">Return to Main Page</a>
+    <a class="bottom_button" href="./orders">Return to Orders Page</a>
+ </fieldset>
+</form>
+<script>
+var myDate = new Date();
+var today = new Date().toISOString().substr(0, 10);
+var time = myDate.toTimeString().substr(0, 5);
+document.getElementById("today").value = today;
+document.getElementById("rightnow").value = time;
+</script>
+{% endblock %}
