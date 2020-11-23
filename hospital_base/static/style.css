@@ -124,12 +124,15 @@ td, th{
 
 .modify{
     width: 7%;
-    padding: 0.5%;
+    padding: 0%;
 }
 
 .delete{
+    width: 100%;
+    height: 45px;
+    border: 2px solid lightcoral;
+    background-color: transparent;
     color: lightcoral;
-    border: 1px solid lightcoral;
 }
 
 .delete:hover{
@@ -138,8 +141,11 @@ td, th{
 }
 
 .update{
-    color: rgb(118, 181, 221);
-    border: 1px solid rgb(118, 181, 221);
+    width: 100%;
+    height: 45px;
+    border: 2px solid rgb(118, 181, 221);
+    background-color: transparent;
+    color: rgb(118, 181, 221)
 }
 
 .update:hover{
