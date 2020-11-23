@@ -53,7 +53,7 @@ CREATE TABLE `Orders` (
   `orderType` varchar(255) NOT NULL,
   `patientID` int(11) NOT NULL,
   `doctorID` int(11) NOT NULL,
-  `staffID` int(11) NULL,
+  `staffID` int(11),
   PRIMARY KEY (`orderID`),
   FOREIGN KEY (`patientID`) REFERENCES `Patients` (`patientID`),
   FOREIGN KEY (`doctorID`) REFERENCES `Doctors` (`doctorID`),
