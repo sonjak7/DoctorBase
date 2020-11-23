@@ -1,0 +1,3 @@
+1. What works?: The add and search features for Doctors, Patients, Staff, Orders, and Results work.
+2. What doesn't work?:
+3. Where/why you are blocked?: We are having trouble handling the doctors-patient relationships table. It is a table to handle the M:M relations between doctors and patients (doctors can have zero/many patients, and patients must one/many doctors, there is only one primary doctor for a patient, who is the only one that can place orders(all recommendations must go through him)). We are not sure whether to allow add, update, and delete on this table or just leave this table as a tacker for relationships.
