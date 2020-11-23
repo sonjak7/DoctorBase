@@ -38,10 +38,14 @@ VALUES (:lastNameInput, :firstNameInput, :primaryDoctorIDInput);
 --get all staff' first name, last name, and type for listing all staff
 SELECT * FROM Staff;
 
--- search staff by their first and last name
+-- search staff
 SELECT Staff.staffID FROM Staff
 WHERE Staff.firstName = :firstNameInput AND Staff.lastName = :lastNameInput;
 
+SELECT firstName, lastName, staffType, staffID from Staff;
+
+SELECT firstName, lastName, staffType, staffID from Staff WHERE firstName
+LIKE :firstNameInput OR lastName LIKE :lastNameInput;
 -- add a new staff
 INSERT INTO Staff (staffType, lastName, firstName)
 VALUES (:staffTypeInput, :lastNameInput, :firstNameInput);
@@ -54,9 +58,18 @@ INNER JOIN Patients p ON o.patientID = p.patientID
 INNER JOIN Doctors d ON o.doctorID = d.doctorID
 INNER JOIN Staff s ON o.staffID = s.staffID;
 
--- seach Orders by orderID
+-- seach Orders
 SELECT Orders.orderID FROM Orders
 WHERE Orders.orderID = :orderIDInput;
+
+SELECT Orders.orderID, Orders.date, Orders.time, Orders.orderType,
+CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient,
+CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor,
+CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff
+FROM Patients JOIN Orders ON Patients.patientID = Orders.patientID 
+AND (Patients.firstName LIKE :firstNameInput OR Patients.lastName LIKE :lastNameInput)
+LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID
+LEFT JOIN Staff ON  Staff.staffID = Orders.staffID;
 
 -- add new order (NOTE: staffID is optional)
 INSERT INTO Orders (date, time, orderType, patientID, doctorID, staffID)
@@ -65,6 +78,11 @@ VALUES (:dateInput, :timeInput, :orderTypeInput, :patientIDInput, :doctorIDInput
 -- Results Table
 --get all result's status, date, `accessedByDoctor`, and associated order type
 SELECT * FROM Results;
+
+SELECT resultID, status, orderID, date,
+CASE WHEN accessedByDoctor = 1 THEN 'YES' ELSE 'NO'
+END AS accessedByDoctor FROM Results WHERE Results.accessedByDoctor = :accessInput
+AND Results.status LIKE :statusInput;
 
 -- get the results of an order
 SELECT Results.resultID FROM Results

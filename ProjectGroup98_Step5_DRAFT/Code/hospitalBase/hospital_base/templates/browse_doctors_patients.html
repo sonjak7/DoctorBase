@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<html>
+<head><title>Browse Results</title></head>
+
+{% for message in get_flashed_messages() %}
+    <h1>{{ message }}</h1>
+{% endfor %}
+
+<table border='1'>
+    <thead>
+        <th>Patient Name</th>
+        <th>Doctor Name</th>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td> {{ r[0] }}</td>
+        <td> {{ r[1] }}</td>
+        <td> <input type='button' name='Update' value='Update' > </td>
+        <td> <input type='button' name='Delete' value='Delete' > </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+
+<a class="home_button" href="./">Return to Main Page</a>
+</html>
+
+{% endblock %}

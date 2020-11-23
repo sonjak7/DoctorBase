@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- FILTER RESULT -->
+<br><h2>Filter Results</h2>
+<form id="Inquire">
+    <fieldset>
+        <legend>Filter by</legend>
+        <fieldset>
+        <label>Status:</label>
+        <input type="radio" name="filter_status" value="Complete" /> Fulfilled
+        <input type="radio" name="filter_status" value="Processing" /> Pending
+        </fieldset>
+            <br />
+        <fieldset>
+            <label>Accessed by Doctor:</label>
+            <input type="radio" name="filter_accessed" value="1">Yes
+            <input type="radio" name="filter_accessed" value="0">No
+        </fieldset>
+        <br />
+        <input class="bottom_button" type="submit" value="Filter" id="filter_res"/>
+    </fieldset>
+</form>
+
+<!-- LOOK AT ALL RESULTS -->
+<br><h2>All Results</h2>
+<table>
+    <thead>
+        <tr>
+            <th class="IDRow">Result ID</th>
+            <th>Status</th>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th style="width: 15%;">Accessed by Doctor</th>
+            <th colspan="2">Modify</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- body will be filled with data from database, this is temporary data for viewing purposes -->
+        <tr>
+            <td class="IDRow">10</td>
+            <td>Fulfilled</td>
+            <td>2</td>
+            <td>2020-11-15</td>
+            <td>False</td>
+            <td class="modify delete">Delete</td>
+            <td class="modify update">Update</td>
+        </tr>
+        <tr>
+            <td class="IDRow">12</td>
+            <td>Pending</td>
+            <td>8</td>
+            <td>2020-5-15</td>
+            <td>True</td>
+            <td class="modify delete">Delete</td>
+            <td class="modify update">Update</td>
+        </tr>
+    </tbody>
+</table><br>
+
+<!-- ADD NEW RESULT -->
+<br><h2>Add New Result</h2>
+<form id="create">
+    <fieldset>
+        <legend>Result Details</legend>
+        <fieldset>
+        <label>Order ID:</label>
+        <input type="number" name="reps" id="reps" size="30" maxlength="100"required>
+        </fieldset>
+        <br />
+        <fieldset>
+        <label>Accessed by Doctor:</label>
+        <input type="radio" name="add_accessed" value="1">Yes
+        <input type="radio" name="add_accessed" value="0">No
+        </fieldset>
+        <br />
+        <fieldset>
+        <label>Status:</label>
+        <input type="radio" name="add_status" value="Fulfilled" /> Fulfilled
+        <input type="radio" name="add_status" value="Pending" /> Pending
+        </fieldset>
+        <br />
+        <input class="bottom_button" type="submit" value="Add Result" id="add_res"/>
+    </fieldset>
+    </form>
+    
+<a class="home_button" href="./">Return to Main Page</a>
+
+{% endblock %}
