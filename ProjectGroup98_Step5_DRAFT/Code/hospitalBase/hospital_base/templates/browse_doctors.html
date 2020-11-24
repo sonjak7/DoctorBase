@@ -3,32 +3,26 @@
 {% block content %}
 
 <html>
-<head><title>Browse Orders</title></head>
+<head><title>Browse Doctors</title></head>
 
 {% for message in get_flashed_messages() %}
     <h1>{{ message }}</h1>
 {% endfor %}
 
-<table border='1'>
+<table>
     <thead>
-        <th>Order ID</th>
-        <th>Date</th>
-        <th>Time</th>
-        <th>Order Type</th>
-        <th>Patient</th>
-        <th>Doctor</th>
-        <th>Staff</th>
+        <th class="IDRow">ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Department</th>
     </thead>
     <tbody>
       {% for r in rows %}
       <tr>
-        <td> {{ r[0] }}</td>
-        <td> {{ r[1] }}</td>
+        <td class="IDRow"> {{ r[0] }}</td>
         <td> {{ r[2] }}</td>
+        <td> {{ r[1] }}</td>
         <td> {{ r[3] }}</td>
-        <td> {{ r[4] }}</td>
-        <td> {{ r[5] }}</td>
-        <td> {{ r[6] }}</td>
         <td class="modify"> <input type='button' name='Update' value='Update' class="update"> </td>
         <td class="modify"> <input type='button' name='Delete' value='Delete' class="delete"> </td>
       </tr>
@@ -36,9 +30,9 @@
     </tbody>
 </table>
 
-<a class="home_button" href="./search_orders">Search Orders</a>
+<a class="home_button" href="./search_doctors">Search Doctors</a>
 <a class="home_button" href="./">Return to Main Page</a>
-<a class="home_button" href="./orders">Return to Orders Page</a>
+<a class="home_button" href="./doctors">Return to Doctors Page</a>
 </html>
 
 {% endblock %}

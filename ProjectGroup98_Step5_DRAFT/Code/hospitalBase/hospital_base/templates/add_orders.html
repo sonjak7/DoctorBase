@@ -6,7 +6,7 @@
     <h1>{{ message }}</h1>
 {% endfor %}
 
-<form id="addorders" action="/add_orders" method="post">
+<form id="addorders" action="./add_orders" method="post">
   <fieldset>
     <legend>Initiate Order</legend>
     <fieldset>
@@ -38,9 +38,6 @@
           <option value="Blood Test">Blood Test</option>
           <option value="X-Ray">X-Ray</option>
           <option value="Prescription">Prescription</option>
-          <option value="Oncology">Doctor Visit: Oncology</option>
-          <option value="Neurology">Doctor Visit: Neurology</option>
-          <option value="Endocrinology">Doctor Visit: Endocrinology</option>
         </select>
     </fieldset>
     <br />

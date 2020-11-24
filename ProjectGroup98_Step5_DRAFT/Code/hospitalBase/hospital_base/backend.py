@@ -14,10 +14,89 @@ def home_page():
 def doctors():
     return render_template('doctors.html')
 
+@webapp.route('/add_doctors', methods=['POST','GET'])
+def add_doctors():
+    db_connection = connect_to_database()
+    if request.method == 'GET':
+        return render_template('add_doctors.html')
+
+    elif request.method == 'POST':
+        print("Adding new doctor")
+        fname = request.form['fname']
+        lname = request.form['lname']
+        department = request.form['department']
+        query = 'INSERT INTO Doctors (lastName, firstName, department) VALUES (%s,%s,%s)'
+        data = (lname, fname, department)
+        execute_query(db_connection, query, data)
+        flash('Doctor Added!')
+        return render_template('add_doctors.html')
+
+@webapp.route('/search_doctors', methods=['GET', 'POST'])
+def search_doctors():
+    if request.method == "POST":
+        print("Searching for a Doctor")
+        search_data = request.form['search_data']
+        db_connection = connect_to_database()
+        # search by firstName or lastName
+        query = "SELECT * FROM Doctors WHERE firstName LIKE %s OR lastName LIKE %s"
+        data = (search_data, search_data)
+        result = execute_query(db_connection, query, data).fetchall()
+        count = len(result)
+        flash(str(count) + " Doctors Found!")
+        return render_template('browse_doctors.html', rows=result)
+    return render_template('search_doctors.html')
+
+@webapp.route('/browse_doctors')
+def browse_doctors():
+    print("Browsing all Doctors")
+    db_connection = connect_to_database()
+    query = "SELECT * FROM Doctors"
+    result = execute_query(db_connection, query).fetchall()
+    return render_template('browse_doctors.html', rows=result)
 
 @webapp.route('/patients')
 def patients():
     return render_template('patients.html')
+
+@webapp.route('/add_patients', methods=['POST','GET'])
+def add_patients():
+    db_connection = connect_to_database()
+    if request.method == 'GET':
+        return render_template('add_patients.html')
+
+    elif request.method == 'POST':
+        print("Adding new patient")
+        fname = request.form['fname']
+        lname = request.form['lname']
+        primaryDocID = request.form['primaryDocID']
+        query = 'INSERT INTO Patients (lastName, firstName, primaryDoctorID) VALUES (%s,%s,%s)'
+        data = (lname, fname, primaryDocID)
+        execute_query(db_connection, query, data)
+        flash('Patient Added!')
+        return render_template('add_patients.html')
+
+@webapp.route('/search_patients', methods=['GET', 'POST'])
+def search_patients():
+    if request.method == "POST":
+        print("Searching for a Patient")
+        search_data = request.form['search_data']
+        db_connection = connect_to_database()
+        # search by firstName or lastName
+        query = "SELECT p.patientID, p.firstName, p.lastName, d.lastName FROM Patients p INNER JOIN Doctors d ON p.primaryDoctorID = d.doctorID WHERE p.firstName LIKE %s OR p.lastName LIKE %s"
+        data = (search_data, search_data)
+        result = execute_query(db_connection, query, data).fetchall()
+        count = len(result)
+        flash(str(count) + " Patients Found!")
+        return render_template('browse_patients.html', rows=result)
+    return render_template('search_patients.html')
+
+@webapp.route('/browse_patients')
+def browse_patients():
+    print("Browsing all Patients")
+    db_connection = connect_to_database()
+    query = "SELECT p.patientID, p.firstName, p.lastName, d.lastName FROM Patients p INNER JOIN Doctors d ON p.primaryDoctorID = d.doctorID"
+    result = execute_query(db_connection, query).fetchall()
+    return render_template('browse_patients.html', rows=result)
 
 @webapp.route('/staff')
 def staff():
@@ -143,7 +222,7 @@ def browse_orders():
 @webapp.route('/results')
 def results():
     return render_template('results.html')
-
+    
 @webapp.route('/add_results', methods=['POST','GET'])
 def add_results():
     db_connection = connect_to_database()
@@ -192,61 +271,29 @@ def browse_results():
     result = execute_query(db_connection, query).fetchall()
     print(result)
     return render_template('browse_results.html', rows=result)
+@webapp.route('/doctors_patients')
+def doctors_patients():
+    return render_template('doctors_patients.html')
+
+@webapp.route('/add_doctors_patients', methods=['POST','GET'])
+def add_doctors_patients():
+    db_connection = connect_to_database()
+    if request.method == 'GET':
+        return render_template('add_doctors_patients.html')
+    elif request.method == 'POST':
+        print("Adding new doctor-patient relationship")
+        doc_id = request.form['doc_id']
+        pat_id = request.form['pat_id']
+        query = 'INSERT INTO Doctors_Patients (doctorID, patientID) VALUES (%s,%s)'
+        data = (doc_id, pat_id)
+        execute_query(db_connection, query, data)
+        flash('Relationship Added!')
+        return render_template('add_doctors_patients.html')
 
 @webapp.route('/browse_doctors_patients')
 def browse_doctors_patients():
-    print("Fetching and rendering Doctor-Patient web page")
+    print("Browsing all doctor-patient relationships")
     db_connection = connect_to_database()
-    query = "SELECT CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor FROM Patients LEFT JOIN Doctors ON Patients.primaryDoctorID = Doctors.doctorID;"
+    query = "SELECT d.doctorID, CONCAT(d.firstName, ' ', d.lastName), p.patientID, CONCAT(p.firstName, ' ', p.lastName) FROM Doctors_Patients dp INNER JOIN Doctors d ON d.doctorID = dp.doctorID INNER JOIN Patients p ON p.patientID = dp.patientID"
     result = execute_query(db_connection, query).fetchall()
-    print(result)
     return render_template('browse_doctors_patients.html', rows=result)
-
-# @webapp.route('/delete')
-# def delete():
-#     return render_template('delete.html')
-
-# @webapp.route('/inquire')
-# def inquire():
-#     return render_template('inquire.html')
-
-# @webapp.route('/inquire_doctors')
-# def inquire_doctors():
-#     return render_template('inquire_doctors.html')
-
-# @webapp.route('/inquire_patients')
-# def inquire_patients():
-#     return render_template('inquire_patients.html')
-
-# @webapp.route('/inquire_orders')
-# def inquire_orders():
-#     return render_template('inquire_orders.html')
-
-# @webapp.route('/inquire_results')
-# def inquire_results():
-#     return render_template('inquire_results.html')
-
-# @webapp.route('/add')
-# def add():
-#     return render_template('add.html')
-
-# @webapp.route('/add_doctors')
-# def add_doctors():
-#     return render_template('add_doctors.html')
-
-# @webapp.route('/add_patients')
-# def add_patients():
-#     return render_template('add_patients.html')
-
-# @webapp.route('/add_orders')
-# def add_orders():
-#     return render_template('add_orders.html')
-
-
-# @webapp.route('/add_results')
-# def add_results():
-#     return render_template('add_results.html')
-
-# @webapp.route('/update')
-# def update():
-#     return render_template('update.html')

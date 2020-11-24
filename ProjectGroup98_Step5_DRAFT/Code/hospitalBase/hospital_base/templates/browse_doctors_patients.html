@@ -2,31 +2,31 @@
 
 {% block content %}
 
-<html>
-<head><title>Browse Results</title></head>
-
-{% for message in get_flashed_messages() %}
-    <h1>{{ message }}</h1>
-{% endfor %}
-
-<table border='1'>
+<!-- LOOK AT ALL DOCTORS-PATIENT COMBINATIONS -->
+<table>
     <thead>
-        <th>Patient Name</th>
-        <th>Doctor Name</th>
+        <tr>
+            <th class="IDRow">Doctor ID</th>
+            <th>Doctor Name</th>
+            <th class="IDRow">Patient ID</th>
+            <th>Patient Name</th>
+        </tr>
     </thead>
     <tbody>
-      {% for r in rows %}
-      <tr>
-        <td> {{ r[0] }}</td>
-        <td> {{ r[1] }}</td>
-        <td> <input type='button' name='Update' value='Update' > </td>
-        <td> <input type='button' name='Delete' value='Delete' > </td>
-      </tr>
-      {% endfor %}
+        {% for r in rows %}
+        <tr>
+            <td class="IDRow"> {{ r[0] }}</td>
+            <td> {{ r[1] }}</td>
+            <td class="IDRow"> {{ r[2] }}</td>
+            <td> {{ r[3] }}</td>
+            <td class="modify"> <input type='button' name='Update' value='Update' class="update"> </td>
+            <td class="modify"> <input type='button' name='Delete' value='Delete' class="delete"> </td>
+        </tr>
+        {% endfor %}
     </tbody>
-</table>
+</table><br>
 
 <a class="home_button" href="./">Return to Main Page</a>
-</html>
+<a class="home_button" href="./doctors_patients">Return to Doctor-Patient Page</a>
 
 {% endblock %}
