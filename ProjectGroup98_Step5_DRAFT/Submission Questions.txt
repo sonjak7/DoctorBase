@@ -1,1 +1,2 @@
-Everything Works.
+- Every add and search functionality should work. Let us know if something doesn't.
+- Help: A patient can have multiple doctors (one from every department), that means the doctor-patient relationship table(Doctors_Patients) must update everytime a patient visits a new doctor (which happens when a patient's primary physician places an order for a visit to a specialist(oncology, neurology, etc)) . How might we make this update (is there something we can do directly on mySQL)(would it be easier through html)?
