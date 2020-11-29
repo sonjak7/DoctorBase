@@ -55,41 +55,43 @@ def browse_doctors():
     return render_template('browse_doctors.html', rows=result)
 
 @webapp.route('/delete_doctors', methods=['POST'])
-def delete_doctors():
-    print("Deleting a Doctor")
-    db_connection = connect_to_database()
-    doctorID = request.form['doctorID']
-    query = "DELETE FROM Doctors WHERE doctorID = %s" % (doctorID)
-    execute_query(db_connection, query).fetchall()
-    flash('Doctor Deleted!')
-    return redirect('/browse_doctors')
+ def delete_doctors():
+     print("Deleting a Doctor")
+     db_connection = connect_to_database()
+     doctorID = request.form['doctorID']
+     query = "DELETE FROM Doctors WHERE doctorID = %s" % (doctorID)
+     execute_query(db_connection, query).fetchall()
+     flash('Doctor Deleted!')
+     return redirect('/browse_doctors')
 
-@webapp.route('/update_doctors/<int:doctorID>', methods=['POST','GET'])
-def update_doctors(doctorID):
-    if request.method == 'GET':     #gather current doctor's information(to fill into text fields)
-        print("Updating Doctor")
-        db_connection = connect_to_database()
-        query = 'SELECT * FROM Doctors WHERE doctorID = %s' % (doctorID)
-        result = execute_query(db_connection, query).fetchall()
-        return render_template('update_doctors.html', doctor=result)
+ @webapp.route('/update_doctors/<int:doctorID>', methods=['POST','GET'])
+ def update_doctors(doctorID):
+     if request.method == 'GET':     #gather current doctor's information(to fill into text fields)
+         print("Updating Doctor")
+         db_connection = connect_to_database()
+         query = 'SELECT * FROM Doctors WHERE doctorID = %s' % (doctorID)
+         result = execute_query(db_connection, query).fetchall()
+         return render_template('update_doctors.html', doctor=result)
 
-    elif request.method == 'POST':  #update doctor and return back to all doctors
-        db_connection = connect_to_database()
-        doctorID = request.form['doctorID']
-        fname = request.form['fname']
-        lname = request.form['lname']
-        department = request.form['department']
-        update_query = 'UPDATE Doctors SET firstName = %s, lastName = %s, department = %s WHERE doctorID = %s'
-        data = (fname, lname, department, doctorID)
-        execute_query(db_connection, update_query, data).fetchall()
-        show_query = 'SELECT * FROM Doctors WHERE doctorID = %s' % doctorID
-        result = execute_query(db_connection, show_query).fetchall()
-        flash('Doctor Updated!')
-        return redirect('/browse_doctors')
+     elif request.method == 'POST':  #update doctor and return back to all doctors
+         db_connection = connect_to_database()
+         doctorID = request.form['doctorID']
+         fname = request.form['fname']
+         lname = request.form['lname']
+         department = request.form['department']
+         update_query = 'UPDATE Doctors SET firstName = %s, lastName = %s, department = %s WHERE doctorID = %s'
+         data = (fname, lname, department, doctorID)
+         execute_query(db_connection, update_query, data).fetchall()
+         show_query = 'SELECT * FROM Doctors WHERE doctorID = %s' % doctorID
+         result = execute_query(db_connection, show_query).fetchall()
+         flash('Doctor Updated!')
+         return redirect('/browse_doctors')
+
 
 @webapp.route('/patients')
 def patients():
     return render_template('patients.html')
+
 @webapp.route('/add_patients', methods=['POST','GET'])
 def add_patients():
     db_connection = connect_to_database()
@@ -178,6 +180,46 @@ def browse_staff():
     print(result)
     return render_template('browse_staff.html', rows=result)
 
+@webapp.route('/update_staff/<int:id>', methods=['POST','GET'])
+def update_staff(id):
+    print('in the update_staff function')
+    db_connection = connect_to_database()
+
+    #display existing data
+    if request.method == 'GET':
+        staff_query = "SELECT firstName, lastName, staffType, staffID from Staff WHERE staffID = %s" % (id)
+        staff_result = execute_query(db_connection, staff_query).fetchone()
+
+        if staff_result == None:
+            return "No such Staff found!"
+
+        return render_template('update_staff.html', staff = staff_result)
+    elif request.method == 'POST':
+        staffID = request.form['staffID']
+        firstName = request.form['firstName']
+        lastName = request.form['lastName']
+        staffType = request.form['staffType']
+
+        query = "UPDATE Staff SET firstName = %s, lastName = %s, staffType = %s WHERE staffID = %s"
+        data = (firstName, lastName, staffType, staffID)
+        result = execute_query(db_connection, query, data)
+        flash("Updated! " + " Staff ID #" + str(staffID))
+
+        return redirect('/browse_staff')
+
+@webapp.route('/delete_staff/<int:id>')
+def delete_people(id):
+    '''deletes a staff with the given id'''
+    db_connection = connect_to_database()
+    query = "DELETE FROM Staff WHERE staffID = %s"
+    data = (id,)
+
+    result = execute_query(db_connection, query, data)
+    flash("Deleted! " + " Staff ID #" + str(id))
+
+    return redirect('/browse_staff')
+
+
 @webapp.route('/orders')
 def orders():
     return render_template('orders.html')
@@ -251,6 +293,53 @@ def browse_orders():
     print(result)
     return render_template('browse_orders.html', rows=result)
 
+@webapp.route('/update_order/<int:id>', methods=['POST','GET'])
+def update_order(id):
+    print('in the update_order function')
+    db_connection = connect_to_database()
+
+    #display existing data
+    if request.method == 'GET':
+        order_query = "SELECT Orders.orderID, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff, Orders.staffID FROM Patients JOIN Orders ON (Patients.patientID = Orders.patientID  AND Orders.orderID = %s) LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON  Staff.staffID = Orders.staffID"
+        data = (id,)
+        order_result = execute_query(db_connection, order_query, data).fetchone()
+
+        print(order_result)
+
+        staff_query = "SELECT staffID, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff FROM Staff;"
+        staff_results = execute_query(db_connection, staff_query).fetchall()
+
+        print(staff_results)
+
+        if order_result == None:
+            return "No such Order found!"
+
+        return render_template('update_order.html', staff = staff_results, order = order_result)
+
+    elif request.method == 'POST':
+        staffID = request.form['staffID']
+        orderID = request.form['orderID']
+
+        query = "UPDATE Orders SET staffID = %s WHERE orderID = %s"
+        data = (staffID, orderID)
+        result = execute_query(db_connection, query, data)
+        flash("Updated! " + " Order ID #" + str(orderID))
+
+        return redirect('/browse_orders')
+
+
+@webapp.route('/delete_order/<int:id>')
+def delete_order(id):
+    '''deletes an order with the given id'''
+    db_connection = connect_to_database()
+    query = "DELETE FROM Orders WHERE orderID = %s"
+    data = (id,)
+
+    result = execute_query(db_connection, query, data)
+    flash("Deleted! " + " Order ID #" + str(id))
+
+    return redirect('/browse_orders')
+
 @webapp.route('/results')
 def results():
     return render_template('results.html')
@@ -264,16 +353,28 @@ def add_results():
         return render_template('add_results.html', orders = result)
     elif request.method == 'POST':
         print("Add new Result!")
-        orderid = request.form['orderID']
+        orderID = request.form['orderID']
         access = request.form['access']
         status = request.form['status']
         date = request.form['date']
 
-        query = 'INSERT INTO Results (status, orderID, date, accessedByDoctor) VALUES (%s,%s,%s,%s)'
-        data = (status, orderid, date, access)
-        execute_query(db_connection, query, data)
-        flash('Result Added!')
-        return render_template('add_results.html')
+        qo = 'SELECT orderID FROM Results WHERE orderID = %s'
+        do = (orderID,)
+        ro = execute_query(db_connection, qo, do).fetchall()
+        co = len(ro)
+
+        if co > 0:
+            flash( "Failed: Result for Order Already Exits! Please Update Result!")
+            query = 'SELECT Orders.orderID, Patients.lastName from Orders JOIN Patients ON Orders.patientID = Patients.patientID'
+            result = execute_query(db_connection, query).fetchall()
+            return render_template('add_results.html', orders = result)
+        else:
+            query = 'INSERT INTO Results (status, orderID, date, accessedByDoctor) VALUES (%s,%s,%s,%s)'
+            data = (status, orderID, date, int(access))
+            print(query)
+            execute_query(db_connection, query, data)
+            flash('Result Added!')
+            return render_template('add_results.html')
 
 @webapp.route('/search_results', methods=['GET', 'POST'])
 def search_results():
@@ -304,6 +405,57 @@ def browse_results():
     print(result)
     return render_template('browse_results.html', rows=result)
 
+
+@webapp.route('/update_result/<int:id_r>/<int:id_o>', methods=['POST','GET'])
+def update_result(id_r, id_o):
+    print('in the update_result function')
+    db_connection = connect_to_database()
+
+    #display existing data
+    if request.method == 'GET':
+        result_query = "SELECT resultID, status, date, accessedByDoctor from Results WHERE resultID = %s" % (id_r)
+        order_query = "SELECT Orders.orderID, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff, Orders.staffID FROM Patients JOIN Orders ON (Patients.patientID = Orders.patientID  AND Orders.orderID = %s) LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON  Staff.staffID = Orders.staffID"
+        order_data = (id_o,)
+        result_result = execute_query(db_connection, result_query).fetchone()
+        order_result = execute_query(db_connection, order_query, order_data).fetchone()
+
+        if result_result == None:
+            return "No such Result found!"
+
+        return render_template('update_result.html', result = result_result, order = order_result)
+    elif request.method == 'POST':
+        resultID = request.form['resultID']
+        status = request.form['status']
+        access = request.form['access']
+        date = request.form['date']
+
+        query = "UPDATE Results SET status = %s, accessedByDoctor = %s, date = %s WHERE resultID = %s"
+        data = (status, int(access), date, resultID)
+        result = execute_query(db_connection, query, data)
+        flash("Updated! " + " Result ID #" + str(resultID))
+
+        return redirect('/browse_results')
+
+
+
+@webapp.route('/delete_result/<int:id>')
+def delete_result(id):
+    '''deletes a result with the given id'''
+    db_connection = connect_to_database()
+    query = "DELETE FROM Results WHERE resultID = %s"
+    data = (id,)
+
+    result = execute_query(db_connection, query, data)
+    flash("Deleted! " + " Result ID #" + str(id))
+
+    return redirect('/browse_results')
+
+
+@webapp.route('/doctors_patients')
+def doctors_patients():
+    return render_template('doctors_patients.html')
+
+
 @webapp.route('/add_doctors_patients', methods=['POST','GET'])
 def add_doctors_patients():
     db_connection = connect_to_database()
@@ -321,9 +473,8 @@ def add_doctors_patients():
 
 @webapp.route('/browse_doctors_patients')
 def browse_doctors_patients():
-    print("Fetching and rendering Doctor-Patient web page")
+    print("Browsing all doctor-patient relationships")
     db_connection = connect_to_database()
-    query = "SELECT CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor FROM Patients LEFT JOIN Doctors ON Patients.primaryDoctorID = Doctors.doctorID;"
+    query = "SELECT d.doctorID, CONCAT(d.firstName, ' ', d.lastName), p.patientID, CONCAT(p.firstName, ' ', p.lastName) FROM Doctors_Patients dp INNER JOIN Doctors d ON d.doctorID = dp.doctorID INNER JOIN Patients p ON p.patientID = dp.patientID"
     result = execute_query(db_connection, query).fetchall()
-    print(result)
     return render_template('browse_doctors_patients.html', rows=result)
