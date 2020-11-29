@@ -54,6 +54,39 @@ def browse_doctors():
     result = execute_query(db_connection, query).fetchall()
     return render_template('browse_doctors.html', rows=result)
 
+@webapp.route('/delete_doctors', methods=['POST'])
+def delete_doctors():
+    print("Deleting a Doctor")
+    db_connection = connect_to_database()
+    doctorID = request.form['doctorID']
+    query = "DELETE FROM Doctors WHERE doctorID = %s" % (doctorID)
+    execute_query(db_connection, query).fetchall()
+    flash('Doctor Deleted!')
+    return redirect('/browse_doctors')
+
+@webapp.route('/update_doctors/<int:doctorID>', methods=['POST','GET'])
+def update_doctors(doctorID):
+    if request.method == 'GET':     #gather current doctor's information(to fill into text fields)
+        print("Updating Doctor")
+        db_connection = connect_to_database()
+        query = 'SELECT * FROM Doctors WHERE doctorID = %s' % (doctorID)
+        result = execute_query(db_connection, query).fetchall()
+        return render_template('update_doctors.html', doctor=result)
+
+    elif request.method == 'POST':  #update doctor and return back to all doctors
+        db_connection = connect_to_database()
+        doctorID = request.form['doctorID']
+        fname = request.form['fname']
+        lname = request.form['lname']
+        department = request.form['department']
+        update_query = 'UPDATE Doctors SET firstName = %s, lastName = %s, department = %s WHERE doctorID = %s'
+        data = (fname, lname, department, doctorID)
+        execute_query(db_connection, update_query, data).fetchall()
+        show_query = 'SELECT * FROM Doctors WHERE doctorID = %s' % doctorID
+        result = execute_query(db_connection, show_query).fetchall()
+        flash('Doctor Updated!')
+        return redirect('/browse_doctors')
+
 @webapp.route('/patients')
 def patients():
     return render_template('patients.html')
