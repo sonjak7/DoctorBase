@@ -38,7 +38,12 @@ CREATE TABLE `Patients` (
   `firstName` varchar(255) NOT NULL,
   `primaryDoctorID` int(11) NOT NULL,
   PRIMARY KEY (`patientID`),
+<<<<<<< Updated upstream
   FOREIGN KEY (`primaryDoctorID`) REFERENCES `Doctors` (`doctorID`) ON DELETE CASCADE
+=======
+  FOREIGN KEY (`primaryDoctorID`) REFERENCES `Doctors` (`doctorID`)
+  ON DELETE CASCADE
+>>>>>>> Stashed changes
 );
 
 
@@ -55,9 +60,18 @@ CREATE TABLE `Orders` (
   `doctorID` int(11) NOT NULL,
   `staffID` int(11),
   PRIMARY KEY (`orderID`),
+<<<<<<< Updated upstream
   FOREIGN KEY (`patientID`) REFERENCES `Patients` (`patientID`) ON DELETE CASCADE,
   FOREIGN KEY (`doctorID`) REFERENCES `Doctors` (`doctorID`) ON DELETE CASCADE,
   FOREIGN KEY (`staffID`) REFERENCES `Staff` (`staffID`) ON DELETE CASCADE
+=======
+  FOREIGN KEY (`patientID`) REFERENCES `Patients` (`patientID`)
+  ON DELETE CASCADE,
+  FOREIGN KEY (`doctorID`) REFERENCES `Doctors` (`doctorID`)
+  ON DELETE CASCADE,
+  FOREIGN KEY (`staffID`) REFERENCES `Staff` (`staffID`)
+  ON DELETE CASCADE
+>>>>>>> Stashed changes
 );
 
 /* Create a table for Results */
@@ -71,7 +85,12 @@ CREATE TABLE `Results` (
   `date` date NULL,
   `accessedByDoctor` bit(1) DEFAULT b'0',
   PRIMARY KEY (`resultID`),
+<<<<<<< Updated upstream
   FOREIGN KEY (`orderID`) REFERENCES `Orders` (`orderID`) ON DELETE CASCADE
+=======
+  FOREIGN KEY (`orderID`) REFERENCES `Orders` (`orderID`)
+  ON DELETE CASCADE
+>>>>>>> Stashed changes
 );
 
 /* Create a table for Doctors_Patients relationship */
@@ -82,8 +101,15 @@ CREATE TABLE `Doctors_Patients` (
   `doctorID` int(11) NOT NULL,
   `patientID` int(11) NOT NULL,
   PRIMARY KEY (`doctorID`, `patientID`),
+<<<<<<< Updated upstream
   FOREIGN KEY (`doctorID`) REFERENCES `Doctors` (`doctorID`) ON DELETE CASCADE,
   FOREIGN KEY (`patientID`) REFERENCES `Patients` (`patientID`) ON DELETE CASCADE
+=======
+  FOREIGN KEY (`doctorID`) REFERENCES `Doctors` (`doctorID`)
+  ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`patientID`) REFERENCES `Patients` (`patientID`)
+  ON UPDATE CASCADE ON DELETE CASCADE
+>>>>>>> Stashed changes
 );
 
 /* (b) Sample Data */
