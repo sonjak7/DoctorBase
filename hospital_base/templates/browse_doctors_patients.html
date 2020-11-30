@@ -2,6 +2,10 @@
 
 {% block content %}
 
+{% for message in get_flashed_messages() %}
+    <h1>{{ message }}</h1>
+{% endfor %}
+
 <!-- LOOK AT ALL DOCTORS-PATIENT COMBINATIONS -->
 <table>
     <thead>
@@ -19,8 +23,14 @@
             <td> {{ r[1] }}</td>
             <td class="IDRow"> {{ r[2] }}</td>
             <td> {{ r[3] }}</td>
-            <td class="modify"> <input type='button' name='Update' value='Update' class="update"> </td>
-            <td class="modify"> <input type='button' name='Delete' value='Delete' class="delete"> </td>
+            <form id="update_doctors_patients" action="./update_doctors_patients/{{ r[0] }}{{ r[2] }}" method="GET">
+                <td class="modify"> <input type='submit' value='Update' class="update"> </td>
+            </form>
+            <form id="delete_doctors_patients" action="./delete_doctors_patients" method="POST">
+                <input type="hidden" name="doctorID" value="{{ r[0] }}">
+                <input type="hidden" name="patientID" value="{{ r[2] }}">
+                <td class="modify"> <input type='submit' value='Delete' class="delete"> </td>
+             </form>
         </tr>
         {% endfor %}
     </tbody>
