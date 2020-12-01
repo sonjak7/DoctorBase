@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br><h2>Update Relationship</h2>
+<form id="update_relationship" action="" method="POST">
+    <fieldset>
+        <legend>Relationship Details</legend>
+        <fieldset>
+            <!-- HIDDEN INPUTS ARE FOR REFERENCE WHEN UPDATING -->
+            <input type="hidden" name="oldDoctorID" value="{{ doctorID }}">
+            <input type="hidden" name="oldPatientID" value="{{ patientID }}">
+            <label>Doctor ID:</label>
+            <input type="number" name="doctorID" value="{{ doctorID }}" required>
+            <label>Patient ID:</label>
+            <input type="number" name="patientID" value="{{ patientID }}" required> 
+        </fieldset><br>
+        <input class="bottom_button" type="submit" value="Update Relationship" id="update_rel">
+    </fieldset>
+</form>
+
+<a class="home_button" href="../browse_doctors_patients">Return to All Relationships Page</a>
+
+{% endblock %}

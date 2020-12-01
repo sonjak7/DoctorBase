@@ -1,8 +1,0 @@
-Note:
-1: folder "HospitalBase_html" contains all static html files
-2: folder "HospitalBase_handlebars_nodeJs" contains a working website for hospital base
-	a. upload files from "HospitalBase_handlebars_nodeJs" to server of choice
-	b. run "npm install"
-	c. run "node backend.js"
-		- if error "EADDRINUSE": change port number in line 14 of "backend.js" from 7020 and repeat c. until error disappears.
-	d. 'Express started on http://localhost:"some number"' indicates that the website is live.

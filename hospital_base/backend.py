@@ -494,11 +494,21 @@ def add_doctors_patients():
         print("Adding new doctor-patient relationship")
         doc_id = request.form['doc_id']
         pat_id = request.form['pat_id']
-        query = 'INSERT INTO Doctors_Patients (doctorID, patientID) VALUES (%s,%s)'
-        data = (doc_id, pat_id)
-        execute_query(db_connection, query, data)
-        flash('Relationship Added!')
+
+        qo = 'SELECT doctorID, patientID FROM Doctors_Patients WHERE doctorID = %s and patientID = %s'
+        do = (doc_id, pat_id)
+        ro = execute_query(db_connection, qo, do).fetchone()
+
+        if ro is None:
+            query = 'INSERT INTO Doctors_Patients (doctorID, patientID) VALUES (%s,%s)'
+            data = (doc_id, pat_id)
+            execute_query(db_connection, query, data)
+            flash('Relationship Added!')
+            return render_template('add_doctors_patients.html')
+
+        flash('Error Relation Already Exits!')
         return render_template('add_doctors_patients.html')
+
 
 @webapp.route('/browse_doctors_patients')
 def browse_doctors_patients():
@@ -536,8 +546,20 @@ def update_doctors_patients(doctorID, patientID):
         oldPatientID = request.form['oldPatientID']
         doctorID = request.form['doctorID']
         patientID = request.form['patientID']
-        query = 'UPDATE Doctors_Patients SET doctorID = %s, patientID = %s WHERE doctorID = %s AND patientID = %s'
-        data = (doctorID, patientID, oldDoctorID, oldPatientID)
+
+        qo = 'SELECT doctorID, patientID FROM Doctors_Patients WHERE doctorID = %s and patientID = %s'
+        do = (doctorID, patientID)
+        ro = execute_query(db_connection, qo, do).fetchone()
+
+        if ro is None:
+            query = 'UPDATE Doctors_Patients SET doctorID = %s, patientID = %s WHERE doctorID = %s AND patientID = %s'
+            data = (doctorID, patientID, oldDoctorID, oldPatientID)
+            execute_query(db_connection, query, data).fetchall()
+            flash('Relationship Updated!')
+            return redirect('/browse_doctors_patients')
+
+        query = "DELETE FROM Doctors_Patients WHERE doctorID = %s AND patientID = %s"
+        data = (oldDoctorID, oldPatientID)
         execute_query(db_connection, query, data).fetchall()
-        flash('Relationship Updated!')
+        flash('Relation Already Exits So Relationship Deleted!')
         return redirect('/browse_doctors_patients')
