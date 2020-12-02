@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Search Order -->
+<br><h2>Search An Order</h2>
+<form id="searchorders" action="" method="post">
+    <fieldset>
+        <legend>Search By Patient's First Name/Last Name</legend>
+        <fieldset>
+            <label>First Name/Last Name:</label>
+            <input type="text" name="search_data" required>
+        </fieldset>
+        <br />
+        <input class="bottom_button" type="submit" value="Search Orders" id="sear_ord">
+    </fieldset>
+</form>
+
+<a class="home_button" href="./">Return to Main Page</a>
+<a class="home_button" href="./orders">Return to Orders Page</a>
+
+{% endblock %}
