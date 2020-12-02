@@ -7,13 +7,13 @@
 {% endfor %}
 
 <!-- ADD NEW RELATIONSHIP -->
-<br><h2>Add New Doctor-Patient Relationship</h2>
-<form id="add_relation" action="./add_doctors_patients" method="POST">
+<br><h2>Add New Staff-Patient Relationship</h2>
+<form id="add_relation" action="./add_staff_patients" method="POST">
     <fieldset>
         <legend>Relationship Details</legend>
         <fieldset>
             <label>Doctor ID: </label>
-            <input type="number" name="doc_id" required>
+            <input type="number" name="staf_id" required>
             <label>Patient ID:</label>
             <input type="number" name="pat_id" required>
         </fieldset>
@@ -23,6 +23,6 @@
 </form>
 
 <a class="home_button" href="./">Return to Main Page</a>
-<a class="home_button" href="./doctors_patients">Return to Doctor-Patient Page</a>
+<a class="home_button" href="./staff_patients">Return to staff-Patient Page</a>
 
 {% endblock %}

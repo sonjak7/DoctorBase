@@ -8,10 +8,10 @@
         <legend>Relationship Details</legend>
         <fieldset>
             <!-- HIDDEN INPUTS ARE FOR REFERENCE WHEN UPDATING -->
-            <input type="hidden" name="oldDoctorID" value="{{ doctorID }}">
+            <input type="hidden" name="oldStaffID" value="{{ staffID }}">
             <input type="hidden" name="oldPatientID" value="{{ patientID }}">
             <label>Doctor ID:</label>
-            <input type="number" name="doctorID" value="{{ doctorID }}" required>
+            <input type="number" name="staffID" value="{{ staffID }}" required>
             <label>Patient ID:</label>
             <input type="number" name="patientID" value="{{ patientID }}" required> 
         </fieldset><br>
@@ -19,6 +19,6 @@
     </fieldset>
 </form>
 
-<a class="home_button" href="../browse_doctors_patients">Return to All Relationships Page</a>
+<a class="home_button" href="../browse_staff_patients">Return to All Relationships Page</a>
 
 {% endblock %}

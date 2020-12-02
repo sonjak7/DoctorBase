@@ -79,15 +79,15 @@ CREATE TABLE `Results` (
   ON DELETE CASCADE
 );
 
-/* Create a table for Doctors_Patients relationship */
+/* Create a table for Staff_Patients relationship */
 
-DROP TABLE IF EXISTS `Doctors_Patients`;
+DROP TABLE IF EXISTS `Staff_Patients`;
 
-CREATE TABLE `Doctors_Patients` (
-  `doctorID` int(11) NOT NULL,
+CREATE TABLE `Staff_Patients` (
+  `staffID` int(11) NOT NULL,
   `patientID` int(11) NOT NULL,
-  PRIMARY KEY (`doctorID`, `patientID`),
-  FOREIGN KEY (`doctorID`) REFERENCES `Doctors` (`doctorID`)
+  PRIMARY KEY (`staffID`, `patientID`),
+  FOREIGN KEY (`staffID`) REFERENCES `Staff` (`staffID`)
   ON UPDATE CASCADE ON DELETE CASCADE,
   FOREIGN KEY (`patientID`) REFERENCES `Patients` (`patientID`)
   ON UPDATE CASCADE ON DELETE CASCADE
@@ -151,9 +151,9 @@ INSERT INTO `Results` VALUES
 (5,'fulfilled', 5, '2020-11-15', '');
 UNLOCK TABLES;
 
-/*Insert into Doctors_Patients --> 5 relations*/
+/*Insert into Staff_Patients --> 5 relations*/
 
-LOCK TABLES `Doctors_Patients` WRITE;
-INSERT INTO `Doctors_Patients` VALUES
+LOCK TABLES `Staff_Patients` WRITE;
+INSERT INTO `Staff_Patients` VALUES
 (1, 3), (1, 5), (3, 2), (4, 4), (2, 3);
 UNLOCK TABLES;
