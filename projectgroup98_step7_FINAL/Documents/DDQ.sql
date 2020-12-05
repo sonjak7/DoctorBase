@@ -72,7 +72,7 @@ CREATE TABLE `Results` (
   `resultID` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(255) NOT NULL,
   `orderID` int(11) NOT NULL,
-  `date` date NULL,
+  `date` date,
   `accessedByDoctor` bit(1) DEFAULT b'0',
   PRIMARY KEY (`resultID`),
   FOREIGN KEY (`orderID`) REFERENCES `Orders` (`orderID`)
