@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>Update Staff For Order #{{order[0]}}:</h2>
+<form id="update_order" action="/update_order/{{order[0]}}" method="post">
+    <fieldset>
+        <label>Patient: </label><input value = "{{ order[2] }}" readonly></br>
+        <label>Doctor: </label><input value = "{{ order[3] }}" readonly></br>
+        <label>Order Type: </label><input value = "{{ order[1] }}" readonly></br>
+        <input type="hidden" name="orderID" value = "{{ order[0] }}">
+        Staff Assigned: <select name="staffID">
+        <!-- display all planets inside this dropdown -->
+            {% for s in staff %}
+              {{ s[0] }}
+              {{ order[5] }}
+              {% if s[0] == order[5] %}
+                 <option selected value="{{ s[0] }}">{{ s[1] }}</option>
+              {% else %}
+                <option value="{{ s[0] }}">{{ s[1] }}</option>
+              {% endif %}
+            {% endfor %}
+        </select></br>
+        <input class="bottom_button" type="submit" value="Update Assigned Staff" id= upd_ord>
+    </fieldset>
+    
+</form>
+<a class="home_button" href="/">Return to Main Page</a>
+<a class="home_button" href="/orders">Return to Orders Page</a>
+{% endblock %}

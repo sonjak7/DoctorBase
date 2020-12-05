@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- SEARCH FOR RELATIONSHIP -->
+<br><h2>Search for Doctor-Patient Relationships</h2>
+<form id="Inquire">
+    <fieldset>
+        <legend>Details</legend>
+        <fieldset>
+        <label>Doctor ID: </label>
+        <input type="number" name="reps" maxlength="100" required>
+        <label>Patient ID:</label>
+        <input type="number" name="reps" maxlength="100" required>
+        </fieldset>
+        <br />
+        <input class="bottom_button" type="submit" value="Search"/>
+    </fieldset>
+</form>
+
+<!-- LOOK AT ALL DOCTORS-PATIENT COMBINATIONS -->
+<br><h2>All Doctor-Patient Relationships</h2>
+<table>
+    <thead>
+        <tr>
+            <th class="IDRow">Doctor ID</th>
+            <th>Doctor Name</th>
+            <th class="IDRow">Patient ID</th>
+            <th>Patient Name</th>
+            <th colspan="2">Modify</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- body will be filled with data from database, this is temporary data for viewing purposes -->
+        <tr>
+            <td class="IDRow">10</td>
+            <td>Ben Carson</td>
+            <td>2</td>
+            <td>Junot Diaz</td>
+            <td class="modify delete">Delete</td>
+            <td class="modify update">Update</td>
+        </tr>
+        <tr>
+            <td class="IDRow">12</td>
+            <td>Siddharth Mukherjee</td>
+            <td>4</td>
+            <td>Esther Duflo</td>
+            <td class="modify delete">Delete</td>
+            <td class="modify update">Update</td>
+        </tr>
+    </tbody>
+</table><br>
+
+<!-- ADD NEW RELATIONSHIP -->
+<br><h2>Add New Doctor-Patient Relationship</h2>
+<form id="create">
+    <fieldset>
+        <legend>Details</legend>
+        <fieldset>
+            <label>Doctor ID: </label>
+            <input type="number" name="reps" maxlength="100" required>
+            <label>Patient ID:</label>
+            <input type="number" name="reps" maxlength="100" required>
+        </fieldset>
+        <br />
+        <input class="bottom_button" type="submit" value="Add"/>
+    </fieldset>
+</form>
+
+<a class="home_button" href="./">Return to Main Page</a>
+
+{% endblock %}
