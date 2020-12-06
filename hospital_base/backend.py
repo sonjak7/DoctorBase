@@ -329,7 +329,7 @@ def update_order(id):
 
     #display existing data
     if request.method == 'GET':
-        order_query = "SELECT Orders.orderID, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff, Orders.staffID FROM Patients JOIN Orders ON (Patients.patientID = Orders.patientID  AND Orders.orderID = %s) LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON  Staff.staffID = Orders.staffID"
+        order_query = "SELECT Orders.orderID, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff, Orders.staffID, Orders.patientID FROM Patients JOIN Orders ON (Patients.patientID = Orders.patientID  AND Orders.orderID = %s) LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON  Staff.staffID = Orders.staffID"
         data = (id,)
         order_result = execute_query(db_connection, order_query, data).fetchone()
 
@@ -347,11 +347,35 @@ def update_order(id):
 
     elif request.method == 'POST':
         staffID = request.form['staffID']
+        oldstaffID = request.form['oldstaffID']
         orderID = request.form['orderID']
+        patientID = request.form['patientID']
 
+        # update orders table
         query = "UPDATE Orders SET staffID = %s WHERE orderID = %s"
         data = (staffID, orderID)
         result = execute_query(db_connection, query, data)
+
+        # check if relation is old and update if it is
+        qold = 'SELECT staffID, patientID FROM Staff_Patients WHERE staffID = %s and patientID = %s'
+        dold = (oldstaffID, patientID)
+        rold = execute_query(db_connection, qold, dold).fetchone()
+
+        if rold is not None:
+            qupd = 'UPDATE Staff_Patients SET staffID = %s WHERE staffID = %s AND patientID = %s'
+            dupd = (staffID, oldstaffID, patientID)
+            execute_query(db_connection, qupd, dupd)
+        else:
+            # check if new relation already exits, add if it doesn't
+            qnew = 'SELECT staffID, patientID FROM Staff_Patients WHERE staffID = %s and patientID = %s'
+            dnew = (staffID, patientID)
+            rnew = execute_query(db_connection, qnew, dnew).fetchone()
+
+            if rnew is None:
+                query2 = 'INSERT INTO Staff_Patients (staffID, patientID) VALUES (%s,%s)'
+                data2 = (staffID, patientID)
+                execute_query(db_connection, query2, data2)
+
         flash("Updated! " + " Order ID #" + str(orderID))
 
         return redirect('/browse_orders')

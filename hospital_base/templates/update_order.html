@@ -9,6 +9,8 @@
         <label>Doctor: </label><input value = "{{ order[3] }}" readonly></br>
         <label>Order Type: </label><input value = "{{ order[1] }}" readonly></br>
         <input type="hidden" name="orderID" value = "{{ order[0] }}">
+        <input type="hidden" name="patientID" value = "{{ order[6] }}">
+        <input type="hidden" name="oldstaffID" value = "{{ order[5] }}">
         Staff Assigned: <select name="staffID">
         <!-- display all planets inside this dropdown -->
             {% for s in staff %}
