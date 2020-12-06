@@ -12,11 +12,11 @@
     <fieldset>
         <legend>Result Details</legend>
         <fieldset>
-        <label>Order ID - 'Patient's Last Name':</label>
+        <label>Patient's Last Name - OrderType:</label>
         <br />
         <select name="orderID" id="orderID" required>
           {% for p in orders %}
-          <option value="{{ p[0] }}">{{ p[0] }} - {{ p[1] }}</option>
+          <option value="{{ p[0] }}">{{ p[1] }} - {{ p[2] }}</option>
         {% endfor %}
         </select>
         </fieldset>

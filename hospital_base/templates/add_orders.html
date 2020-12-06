@@ -10,27 +10,25 @@
   <fieldset>
     <legend>Initiate Order</legend>
     <fieldset>
-      <legend>
-      Patient's Information
-      </legend>
-      <label>First Name:</label>
-      <input type="text" name="pfname" required>
-      <label><br />Last Name:</label>
-      <input type="text" name="plname" required>
+      <label>Patient:</label>
       <br />
-    </fieldset>
-    <br />
-    <fieldset>
-      <legend>
-      Doctor's Information
-      </legend>
-      <label>First Name:</label>
-      <input type="text" name="dfname" required>
-      <label><br />Last Name:</label>
-      <input type="text" name="dlname" required>
+      <select name="patientID" id="patientID" required>
+        {% for p in patients %}
+        <option value="{{ p[0] }}">{{ p[1] }}</option>
+      {% endfor %}
+      </select>
+      </fieldset>
       <br />
-    </fieldset>
-    <br />
+      <fieldset>
+        <label>Doctor:</label>
+        <br />
+        <select name="doctorID" id="doctorID" required>
+          {% for d in doctors %}
+          <option value="{{ d[0] }}">{{ d[1] }}</option>
+        {% endfor %}
+        </select>
+        </fieldset>
+        <br />
     <fieldset>
       <label>Order Type:</label>
         <select name="orderType" id="orderType" required>
