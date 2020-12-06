@@ -1,12 +1,2 @@
-1. Update Patient: 
-Create Dropdown of FK primaryDoctorID,
-Doctor's name is displayed,
-primaryDoctorID used as value
-
-3. Add Staff_Patients
-Dropdown of Staff and Patients
-
-4. Update Staff_Patients
-same as 3.
 
 5. (if time permits) Fix Title colors and overall site aesthetics
