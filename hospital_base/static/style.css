@@ -8,6 +8,7 @@ h1{
     margin: 1.5%;
     font-size: 50px;
     font-family: sans-serif;
+    text-decoration: black underline;
 }
 
 h2{
@@ -36,19 +37,22 @@ a, input[type=submit]{
 }
 
 .home_button{
-    color: white;
-    background-color: rgb(118, 181, 221);
+    color: rgb(118, 181, 221);
+    background-color: white;
+    opacity: 0.97;
     display: block;
     width: 28%;
     font-size: 35px;
     padding: 1%;
     margin: 0.8%;
+    border: 3px solid rgb(118, 181, 221);
     border-radius: 18px;
 }
 
 .home_button:hover{
-    background-color: rgb(75, 147, 192);
-    border-color: rgb(75, 147, 192);
+    color: white;
+    background-color: rgb(118, 181, 221);
+    border-color: rgb(118, 181, 221);
 }
 
 #nav_bar{
