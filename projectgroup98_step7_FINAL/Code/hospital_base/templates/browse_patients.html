@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<html>
+<head><title>Browse Patients</title></head>
+
+{% for message in get_flashed_messages() %}
+    <h1>{{ message }}</h1>
+{% endfor %}
+
+<table>
+    <thead>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Primary Doctor</th>
+    </thead>
+    <tbody>
+      {% for r in rows %}
+      <tr>
+        <td> {{ r[0] }}</td>
+        <td> {{ r[1] }}</td>
+        <td> {{ r[2] }}</td>
+        <td> {{ r[3] }}</td>
+        <form id="update_patients" action="./update_patients/{{ r[0] }}" method="GET">
+          <td class="modify"> <input type='submit' value='Update' class="update"> </td>
+        </form>
+        <form id="delete_patients" action="./delete_patients" method="POST">
+          <input type="hidden" name="patientID" value="{{ r[0] }}">
+          <td class="modify"> <input type='submit' value='Delete' class="delete"> </td>
+        </form>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
+
+<a class="home_button" href="./search_patients">Search Patients</a>
+<a class="home_button" href="./">Return to Main Page</a>
+<a class="home_button" href="./patients">Return to Patients Page</a>
+</html>
+
+{% endblock %}

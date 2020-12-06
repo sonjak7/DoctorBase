@@ -1,0 +1,184 @@
+body{
+    background-color: rgb(205, 226, 213);
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+    margin: 1.5%;
+    font-size: 50px;
+    font-family: sans-serif;
+}
+
+h2{
+    color: white;
+    text-align: center;
+    margin-left: 0.2%;
+    border-radius: 6px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    font-size: 30px;
+    background-color: rgb(62, 78, 88);
+    opacity: 0.9;
+    display: inline;
+    padding: 0.6%;
+    padding-bottom: 0.2%;
+}
+
+#site_name{
+    font-size: 60px;
+    color: rgb(248, 248, 248);
+}
+
+a, input[type=submit]{
+    text-decoration: none;
+    text-align: center;
+}
+
+.home_button{
+    color: white;
+    background-color: rgb(118, 181, 221);
+    display: block;
+    width: 28%;
+    font-size: 35px;
+    padding: 1%;
+    margin: 0.8%;
+    border-radius: 18px;
+}
+
+.home_button:hover{
+    background-color: rgb(75, 147, 192);
+    border-color: rgb(75, 147, 192);
+}
+
+#nav_bar{
+    list-style-type: none;
+    margin: 0%;
+    padding-bottom: 1%;
+    padding-top: 1%;
+    overflow: hidden;
+    position: relative;
+    bottom: 10px;
+    right: 1.1%;
+    width: 100%;
+    background-color: rgb(118, 181, 221);
+    overflow-x: hidden;
+}
+
+@media screen and (min-width: 1000px) and (min-height: 450px){ 
+    img{
+        position: fixed;
+        left: 0%;
+        top: 0%;
+        height: 100%;
+        width: 100%;
+        opacity: 0.8;
+        z-index: -1;
+    }
+}
+
+/* CHANGE BACKGROUND TO GREY IF SCREEN IS TOO SMALL FOR IMAGE */
+@media screen and (max-width: 999px){ 
+    img{
+        width: 0%;
+    }
+}
+@media screen and (max-height: 449px){ 
+    img{
+        width: 0%;
+    }
+}
+
+form{
+    color: white;
+    background-color: rgb(62, 78, 88);
+    opacity: 0.9;
+    border-radius: 10px;
+    padding: 1%;
+    margin-left: 0.2%;
+    margin-right: 0.2%;
+}
+
+table{
+    color: white;
+    width: 99.6%;
+    background-color: rgb(62, 78, 88);
+    opacity: 0.9;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    padding: 0.8%;
+    margin-left: 0.2%;
+    margin-right: 0.2%;    
+}
+
+td, th{
+    border-radius: 5px;
+    background-color: rgb(48, 60, 68);
+    padding: 1%;
+    text-align: center;
+}
+
+.IDRow{
+    width: 10%;
+}
+
+.modify{
+    width: 7%;
+    padding: 0%;
+}
+
+.delete{
+    width: 100%;
+    height: 45px;
+    border: 2px solid lightcoral;
+    background-color: transparent;
+    color: lightcoral;
+}
+
+.delete:hover{
+    color: white;
+    background-color: lightcoral;
+}
+
+.update{
+    width: 100%;
+    height: 45px;
+    border: 2px solid rgb(118, 181, 221);
+    background-color: transparent;
+    color: rgb(118, 181, 221)
+}
+
+.update:hover{
+    color: white;
+    background-color: rgb(118, 181, 221);
+}
+
+fieldset{
+    border: 1.5px solid black;
+    border-radius: 10px;
+    background-color: rgb(48, 60, 68);
+}
+
+textarea, input, select{
+    background-color: lightgrey;
+    border: none;
+    border-radius: 3px;
+    margin: 0.3%;
+    font-size: 16px;
+    font-family: sans-serif;
+}
+
+.bottom_button{
+    border-radius: 4px;
+    font-size: 20px;
+    padding: 0.5%;
+    margin: 0.4%;
+    color: rgb(118, 181, 221);
+    background-color: transparent;
+    border: 2px solid rgb(118, 181, 221);
+}
+
+.bottom_button:hover{
+    color: white;
+    background-color: rgb(118, 181, 221);
+}

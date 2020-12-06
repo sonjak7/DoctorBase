@@ -260,45 +260,41 @@ def orders():
 @webapp.route('/add_orders', methods=['POST','GET'])
 def add_orders():
     db_connection = connect_to_database()
+    query_patients = "SELECT Patients.patientID, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient FROM Patients"
+    query_doc = "SELECT Doctors.doctorID, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor FROM Doctors"
+    result_patients = execute_query(db_connection, query_patients).fetchall()
+    result_doc = execute_query(db_connection, query_doc).fetchall()
     if request.method == 'GET':
-        return render_template('add_orders.html')
+        return render_template('add_orders.html', patients = result_patients, doctors = result_doc)
     elif request.method == 'POST':
         print("Add new order!")
-        pfname = request.form['pfname']
-        plname = request.form['plname']
-        dfname = request.form['dfname']
-        dlname = request.form['dlname']
+        patientID = request.form['patientID']
+        doctorID = request.form['doctorID']
         ordertype = request.form['orderType']
         date = request.form['date']
         time = request.form['time']
 
         # get patient from database
-        qp = "SELECT patientID, primaryDoctorID from Patients WHERE firstName LIKE %s AND lastName LIKE %s"
-        dp = (pfname, plname)
+        qp = "SELECT patientID, primaryDoctorID from Patients WHERE patientID = %s"
+        dp = (patientID,)
         rp = execute_query(db_connection, qp, dp).fetchall()
         cp = len(rp)
 
         # get doctor from database
-        qd = "SELECT doctorID from Doctors WHERE firstName LIKE %s AND lastName LIKE %s"
-        dd = (dfname, dlname)
+        qd = "SELECT doctorID from Doctors WHERE doctorID = %s"
+        dd = (doctorID,)
         rd = execute_query(db_connection, qd, dd).fetchall()
         cd = len(rd)
 
-        if cp == 0:
-            flash( "Failed: Patient Not Found!")
-            return render_template('add_orders.html')
-        elif cd == 0:
-            flash( "Failed: Doctor Not Found!")
-            return render_template('add_orders.html')
-        elif rp[0][1] != rd[0][0]:
+        if rp[0][1] != rd[0][0]:
             flash( "Failed: Doctor is not Patient's Primary Physician!")
-            return render_template('add_orders.html')
+            return render_template('add_orders.html', patients = result_patients, doctors = result_doc)
         else:
             qo = 'INSERT INTO Orders (date, time, orderType, patientID, doctorID) VALUES (%s,%s,%s,%s,%s)'
             do = (date, time, ordertype, rp[0][0], rd[0][0])
             execute_query(db_connection, qo, do)
             flash('Success: Order Added!')
-            return render_template('add_orders.html')
+            return render_template('add_orders.html', patients = result_patients, doctors = result_doc)
 
 @webapp.route('/search_orders', methods=['GET', 'POST'])
 def search_orders():
@@ -381,7 +377,7 @@ def results():
 def add_results():
     db_connection = connect_to_database()
     if request.method == 'GET':
-        query = 'SELECT Orders.orderID, Patients.lastName from Orders JOIN Patients ON Orders.patientID = Patients.patientID'
+        query = 'SELECT Orders.orderID, Patients.lastName, Orders.orderType from Orders JOIN Patients ON Orders.patientID = Patients.patientID'
         result = execute_query(db_connection, query).fetchall()
         return render_template('add_results.html', orders = result)
     elif request.method == 'POST':

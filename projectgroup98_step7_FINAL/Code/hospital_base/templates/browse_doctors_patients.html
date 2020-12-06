@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <h1>{{ message }}</h1>
+{% endfor %}
+
+<!-- LOOK AT ALL DOCTORS-PATIENT COMBINATIONS -->
+<table>
+    <thead>
+        <tr>
+            <th class="IDRow">Doctor ID</th>
+            <th>Doctor Name</th>
+            <th class="IDRow">Patient ID</th>
+            <th>Patient Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in rows %}
+        <tr>
+            <td class="IDRow"> {{ r[0] }}</td>
+            <td> {{ r[1] }}</td>
+            <td class="IDRow"> {{ r[2] }}</td>
+            <td> {{ r[3] }}</td>
+            <form id="update_doctors_patients" action="./update_doctors_patients/{{ r[0] }}{{ r[2] }}" method="GET">
+                <td class="modify"> <input type='submit' value='Update' class="update"> </td>
+            </form>
+            <form id="delete_doctors_patients" action="./delete_doctors_patients" method="POST">
+                <input type="hidden" name="doctorID" value="{{ r[0] }}">
+                <input type="hidden" name="patientID" value="{{ r[2] }}">
+                <td class="modify"> <input type='submit' value='Delete' class="delete"> </td>
+             </form>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table><br>
+
+<a class="home_button" href="./">Return to Main Page</a>
+<a class="home_button" href="./doctors_patients">Return to Doctor-Patient Page</a>
+
+{% endblock %}
