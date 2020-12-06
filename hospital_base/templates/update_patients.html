@@ -12,8 +12,16 @@
             <input type="text" name="fname" value="{{ patient[0][2] }}" required>
             <label>Last Name:</label>
             <input type="text" name="lname" value="{{ patient[0][1] }}" required>
-            <label>Primary Doctor ID:</label>
-            <input type="number" name="primary" value="{{ patient[0][3] }}" required>
+            <label>Primary Doctor:</label>
+            <select name="primary">
+                {% for doc in doctors %}
+                    {% if patient[0][3] == doc[0] %}
+                        <option value="{{doc[0]}}" selected>{{ doc[1] }} {{ doc[2] }}</option>
+                    {% else %}
+                        <option value="{{doc[0]}}">{{ doc[1] }} {{ doc[2] }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
         </fieldset><br>
         <input class="bottom_button" type="submit" value="Update Patient" id="update_pat">
     </fieldset>

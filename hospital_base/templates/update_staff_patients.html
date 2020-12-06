@@ -10,10 +10,29 @@
             <!-- HIDDEN INPUTS ARE FOR REFERENCE WHEN UPDATING -->
             <input type="hidden" name="oldStaffID" value="{{ staffID }}">
             <input type="hidden" name="oldPatientID" value="{{ patientID }}">
-            <label>Doctor ID:</label>
-            <input type="number" name="staffID" value="{{ staffID }}" required>
-            <label>Patient ID:</label>
-            <input type="number" name="patientID" value="{{ patientID }}" required> 
+
+            <label>Staff:</label>
+            <select name="staffID">
+                {% for st in staff %}
+                    {% if staffID == st[0] %}
+                        <option value="{{st[0]}}" selected>{{ st[1] }} {{ st[2] }}</option>
+                    {% else %}
+                        <option value="{{st[0]}}">{{ st[1] }} {{ st[2] }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
+            <label>Patient:</label>
+            <select name="patientID">
+                {% for pat in patients %}
+                    {% if patientID == pat[0] %}
+                        <option value="{{pat[0]}}" selected>{{ pat[1] }} {{ pat[2] }}</option>
+                    {% else %}
+                        <option value="{{pat[0]}}">{{ pat[1] }} {{ pat[2] }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+
         </fieldset><br>
         <input class="bottom_button" type="submit" value="Update Relationship" id="update_rel">
     </fieldset>

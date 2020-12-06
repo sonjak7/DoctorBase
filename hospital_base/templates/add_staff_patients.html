@@ -12,10 +12,20 @@
     <fieldset>
         <legend>Relationship Details</legend>
         <fieldset>
-            <label>Doctor ID: </label>
-            <input type="number" name="staf_id" required>
-            <label>Patient ID:</label>
-            <input type="number" name="pat_id" required>
+            <label>Staff:</label>
+            <select name="staf_id">
+                <option disabled selected value></option>
+                {% for st in staff %}
+                    <option value="{{st[0]}}">{{ st[1] }} {{ st[2] }}</option>
+                {% endfor %}
+            </select>
+            <label>Patient:</label>
+            <select name="pat_id">
+                <option disabled selected value></option>
+                {% for pat in patients %}
+                    <option value="{{pat[0]}}">{{ pat[1] }} {{ pat[2] }}</option>
+                {% endfor %}
+            </select>
         </fieldset>
         <br />
         <input class="bottom_button" type="submit" value="Add Relationship" id="add_rel"/>

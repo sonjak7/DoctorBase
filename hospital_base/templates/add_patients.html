@@ -16,8 +16,13 @@
             <input type="text" name="fname" required>
             <label>Last Name:</label>
             <input type="text" name="lname" required>
-            <label>Primary Doctor ID:</label>
-            <input type="number" name="primaryDocID" required>
+            <label>Primary Doctor:</label>
+            <select name="primaryDocID">
+                <option disabled selected value></option>
+                {% for doc in doctors %}
+                    <option value="{{doc[0]}}">{{ doc[1] }} {{ doc[2] }}</option>
+                {% endfor %}
+            </select>
         </fieldset>
         <br />
         <input class="bottom_button" type="submit" value="Add Patient" id="add_pat">

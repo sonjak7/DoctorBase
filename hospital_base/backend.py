@@ -94,7 +94,9 @@ def patients():
 def add_patients():
     db_connection = connect_to_database()
     if request.method == 'GET':
-        return render_template('add_patients.html')
+        query = 'SELECT doctorID, firstName, lastName FROM Doctors'
+        result = execute_query(db_connection, query)
+        return render_template('add_patients.html', doctors=result)
 
     elif request.method == 'POST':
         print("Adding new patient")
@@ -105,7 +107,7 @@ def add_patients():
         data = (lname, fname, primaryDocID)
         execute_query(db_connection, query, data)
         flash('Patient Added!')
-        return render_template('add_patients.html')
+        return redirect('/add_patients')
 
 @webapp.route('/search_patients', methods=['GET', 'POST'])
 def search_patients():
@@ -126,7 +128,7 @@ def search_patients():
 def browse_patients():
     print("Browsing all Patients")
     db_connection = connect_to_database()
-    query = "SELECT p.patientID, p.firstName, p.lastName, d.lastName FROM Patients p INNER JOIN Doctors d ON p.primaryDoctorID = d.doctorID"
+    query = "SELECT p.patientID, p.firstName, p.lastName, CONCAT(d.firstName , ' ' , d.lastName) FROM Patients p INNER JOIN Doctors d ON p.primaryDoctorID = d.doctorID"
     result = execute_query(db_connection, query).fetchall()
     return render_template('browse_patients.html', rows=result)
 
@@ -145,9 +147,11 @@ def update_patients(patientID):
      if request.method == 'GET':     #gather current patients's information(to fill into text fields)
          print("Updating Patient")
          db_connection = connect_to_database()
-         query = 'SELECT * FROM Patients WHERE patientID = %s' % (patientID)
-         result = execute_query(db_connection, query).fetchall()
-         return render_template('update_patients.html', patient=result)
+         patient_query = 'SELECT * FROM Patients WHERE patientID = %s' % (patientID)
+         patient_result = execute_query(db_connection, patient_query).fetchall()
+         doctor_query = 'SELECT doctorID, firstName, lastName FROM Doctors'
+         doctor_result = execute_query(db_connection, doctor_query).fetchall()
+         return render_template('update_patients.html', patient=patient_result, doctors=doctor_result)
 
      elif request.method == 'POST':  #update patient and return back to all patients
          db_connection = connect_to_database()
@@ -489,7 +493,12 @@ def staff_patients():
 def add_staff_patients():
     db_connection = connect_to_database()
     if request.method == 'GET':
-        return render_template('add_staff_patients.html')
+        patient_query = 'SELECT patientID, firstName, lastName FROM Patients'
+        patient_result = execute_query(db_connection, patient_query)
+        staff_query = 'SELECT staffID, firstName, lastName FROM Staff'
+        staff_result = execute_query(db_connection, staff_query)
+        return render_template('add_staff_patients.html', staff=staff_result, patients=patient_result)
+
     elif request.method == 'POST':
         print("Adding new staff-patient relationship")
         staf_id = request.form['staf_id']
@@ -504,11 +513,9 @@ def add_staff_patients():
             data = (staf_id, pat_id)
             execute_query(db_connection, query, data)
             flash('Relationship Added!')
-            return render_template('add_staff_patients.html')
-
-        flash('Error Relation Already Exits!')
-        return render_template('add_staff_patients.html')
-
+        else:
+            flash('Error Relation Already Exits!')
+        return redirect('add_staff_patients')
 
 @webapp.route('/browse_staff_patients')
 def browse_staff_patients():
@@ -535,10 +542,11 @@ def update_staff_patients(staffID, patientID):
     if request.method == 'GET':     #gather current patients's information(to fill into text fields)
         print("Updating Relationship")
         db_connection = connect_to_database()
-        #  query = 'SELECT * FROM Doctors_Patients WHERE doctorID = %s AND patientID = %s'
-        #  data = (doctorID, patientID)
-        #  result = execute_query(db_connection, query, data).fetchall()
-        return render_template('update_staff_patients.html', staffID=staffID, patientID=patientID)
+        patient_query = 'SELECT patientID, firstName, lastName FROM Patients'
+        patient_result = execute_query(db_connection, patient_query)
+        staff_query = 'SELECT staffID, firstName, lastName FROM Staff'
+        staff_result = execute_query(db_connection, staff_query)
+        return render_template('update_staff_patients.html', staffID=staffID, patientID=patientID, staff=staff_result, patients=patient_result)
 
     elif request.method == 'POST':  #update relationship and return back to all relationships
         db_connection = connect_to_database()
