@@ -15,6 +15,8 @@ SELECT * FROM Doctors;
 -- search doctors by their first and last name
 SELECT Doctors.doctorID FROM Doctors
 WHERE Doctors.firstName = :firstNameInput AND Doctors.lastName = :lastNameInput;
+--in python/flask
+SELECT * FROM Doctors WHERE firstName LIKE :firstNameInput OR lastName LIKE :lastNameInput;
 
 -- add new doctor
 INSERT INTO Doctors (lastName, firstName, department)
@@ -22,13 +24,19 @@ VALUES (:lastNameInput, :firstNameInput, :departmentInput);
 
 -- Patients Table
 --get all patients' first name, last name, and primary doctor's last name for listing all patients
-SELECT p.patientID, p.firstName, p.lastName, d.lastName AS "Primary doctor's name"
-FROM Patients p INNER JOIN
-Doctors d ON p.primaryDoctorID = d.doctorID;
+SELECT p.patientID, p.firstName, p.lastName,
+CONCAT(d.firstName , ' ' , d.lastName)
+FROM Patients p INNER JOIN Doctors d 
+ON p.primaryDoctorID = d.doctorID;
 
 -- look up patient by their first and last name
 SELECT Patients.patientID FROM Patients
 WHERE Patients.firstName = :firstNameInput AND Patients.lastName = :lastNameInput;
+
+-- for python/flask
+SELECT p.patientID, p.firstName, p.lastName, d.lastName FROM Patients p
+INNER JOIN Doctors d ON p.primaryDoctorID = d.doctorID WHERE p.firstName
+LIKE :patientfirstnameInput OR p.lastName LIKE :patientlastnameInput:
 
 -- add a new patient
 INSERT INTO Patients (lastName, firstName, primaryDoctorID)
@@ -41,6 +49,10 @@ SELECT * FROM Staff;
 -- search staff
 SELECT Staff.staffID FROM Staff
 WHERE Staff.firstName = :firstNameInput AND Staff.lastName = :lastNameInput;
+
+--python/flask
+SELECT firstName, lastName, staffType, staffID
+from Staff WHERE firstName LIKE :firstNameInput OR lastName LIKE :lastNameInput;
 
 SELECT firstName, lastName, staffType, staffID from Staff;
 
@@ -58,7 +70,7 @@ INNER JOIN Patients p ON o.patientID = p.patientID
 INNER JOIN Doctors d ON o.doctorID = d.doctorID
 INNER JOIN Staff s ON o.staffID = s.staffID;
 
--- seach Orders
+-- search Orders
 SELECT Orders.orderID FROM Orders
 WHERE Orders.orderID = :orderIDInput;
 
@@ -84,6 +96,13 @@ CASE WHEN accessedByDoctor = 1 THEN 'YES' ELSE 'NO'
 END AS accessedByDoctor FROM Results WHERE Results.accessedByDoctor = :accessInput
 AND Results.status LIKE :statusInput;
 
+SELECT Orders.orderID, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName)
+AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName)
+AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName)
+AS Staff, Orders.staffID FROM Patients JOIN Orders ON (Patients.patientID = Orders.patientID 
+AND Orders.orderID = %s) LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID
+LEFT JOIN Staff ON  Staff.staffID = Orders.staffID;
+
 -- get the results of an order
 SELECT Results.resultID FROM Results
 WHERE Results.orderID = :orderIDInput;
@@ -92,12 +111,12 @@ WHERE Results.orderID = :orderIDInput;
 INSERT INTO Results (status, orderID, date, accessedByDoctor)
 VALUES (:statusInput, :orderIDInput, :dateInput, :accessedByDoctorInput);
 
--- Doctors_Patients Table
--- get all doctor-patient relationships, list doctor's last name and patient's first/last name
-SELECT d.lastName AS "Doctor's name", CONCAT(p.firstName, ' ', p.lastName) AS "Patient's Name"
-FROM Doctors_Patients dp
-INNER JOIN Doctors d ON d.doctorID = dp.doctorID
-INNER JOIN Patients p ON p.patientID = dp.patientID;
+-- Staff_Patients Table
+-- get all staff-patient relationships, list staff's last name and patient's first/last name
+SELECT s.lastName AS "Staff's name", CONCAT(p.firstName, ' ', p.lastName) AS "Patient's Name"
+FROM Staff_Patients sp
+INNER JOIN Staff s ON s.staffID = sp.staffID
+INNER JOIN Patients p ON p.patientID = sp.patientID;
 
 -- insert new relationship between patient and doctor
 INSERT INTO Doctors_Patients (doctorID, patientID)
@@ -148,5 +167,5 @@ DELETE FROM Patients WHERE patientID = :patientIDInput;
 --delete a staff(quits job)
 DELETE FROM Staff WHERE staffID = :staffIDInput;
 
---delete doctor-patient relationship(patient leaves a doctor, vice versa)
-DELETE FROM Doctors_Patients WHERE doctorID = :doctorIDInput AND patientID = :patientIDInput;
+--delete staff-patient relationship(order is deleted/patient is deleted/staff is deleted from database)
+DELETE FROM Staff_Patients WHERE staffID = :staffIDInput AND patientID = :patientIDInput;

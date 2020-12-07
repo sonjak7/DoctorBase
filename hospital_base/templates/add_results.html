@@ -15,6 +15,7 @@
         <label>Patient's Last Name - OrderType:</label>
         <br />
         <select name="orderID" id="orderID" required>
+          <!-- Patient Name and Order Type Are listed in Dropdown -->
           {% for p in orders %}
           <option value="{{ p[0] }}">{{ p[1] }} - {{ p[2] }}</option>
         {% endfor %}

@@ -11,8 +11,13 @@
         Order Type: <input value="{{order[1]}}" readonly><br>
         Status (Fulfilled or Pending:Reason?): <input type="text" name="status" value="{{result[1]}}" required><br>
         <label>Accessed by Doctor:</label>
-        <input type="radio" name="access" value= '1' required>Yes
-        <input type="radio" name="access" value= '0' >No
+            {% if rad == 1 %}
+                <input type="radio" name="access" value= '1' required checked="checked">Yes
+                <input type="radio" name="access" value= '0' >No
+            {% else %}
+                <input type="radio" name="access" value= '1' required >Yes
+                <input type="radio" name="access" value= '0' checked="checked">No
+            {% endif %}
         <br><label>Date:</label>
       <input id="today" type="date" name="date" required>
       <br><input class="bottom_button" type="submit" value="Update Result" id=upd_result>

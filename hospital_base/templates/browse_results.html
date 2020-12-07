@@ -13,7 +13,8 @@
     <thead>
         <th>Result ID</th>
         <th>Result Status</th>
-        <th>Order ID</th>
+        <th>Patient</th>
+        <th>Order Type</th>
         <th>Date</th>
         <th>Accessed By Physician?</th>
     </thead>
@@ -22,7 +23,8 @@
       <tr>
         <td> {{ r[0] }}</td>
         <td> {{ r[1] }}</td>
-        <td> {{ r[2] }}</td>
+        <td> {{ r[6] }}</td>
+        <td> {{ r[5] }}</td>
         <td> {{ r[3] }}</td>
         <td> {{ r[4] }}</td>
         <td class="modify"> <input type='button' name='Update' value='Update' class="update" onclick="window.location = '/update_result/{{r[0]}}/{{r[2]}}'"> </td>

@@ -13,14 +13,14 @@
         <legend>Relationship Details</legend>
         <fieldset>
             <label>Staff:</label>
-            <select name="staf_id">
+            <select name="staf_id" required>
                 <option disabled selected value></option>
                 {% for st in staff %}
                     <option value="{{st[0]}}">{{ st[1] }} {{ st[2] }}</option>
                 {% endfor %}
             </select>
             <label>Patient:</label>
-            <select name="pat_id">
+            <select name="pat_id" required>
                 <option disabled selected value></option>
                 {% for pat in patients %}
                     <option value="{{pat[0]}}">{{ pat[1] }} {{ pat[2] }}</option>

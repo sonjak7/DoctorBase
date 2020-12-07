@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
+<!-- page used to update the staff assigned to an order -->
 <h2>Update Staff For Order #{{order[0]}}:</h2>
 <form id="update_order" action="/update_order/{{order[0]}}" method="post">
     <fieldset>
@@ -11,8 +11,9 @@
         <input type="hidden" name="orderID" value = "{{ order[0] }}">
         <input type="hidden" name="patientID" value = "{{ order[6] }}">
         <input type="hidden" name="oldstaffID" value = "{{ order[5] }}">
-        Staff Assigned: <select name="staffID">
-        <!-- display all planets inside this dropdown -->
+        Staff Assigned: <select name="staffID" required>
+          <option value="">None</option>
+        <!-- display all staff inside this dropdown -->
             {% for s in staff %}
               {{ s[0] }}
               {{ order[5] }}
