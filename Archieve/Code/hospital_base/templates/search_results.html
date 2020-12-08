@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- FILTER RESULT -->
+<br><h2>Filter Results</h2>
+<form id="filterresults" action="" method="post">
+    <fieldset>
+        <legend>Filter by</legend>
+        <fieldset>
+        <label>Status:</label>
+        <input type="radio" name="filter_status" value="fulfilled" required> Fulfilled
+        <input type="radio" name="filter_status" value="Pending" > Pending: Reason
+        </fieldset>
+            <br />
+        <fieldset>
+            <label>Accessed by Doctor:</label>
+            <input type="radio" name="doc_access" value=1 required>Yes
+            <input type="radio" name="doc_access" value=0>No
+        </fieldset>
+        <br />
+        <input class="bottom_button" type="submit" value="filter" id="filter_res"/>
+    </fieldset>
+</form>
+<a class="home_button" href="./results">Return to Results Page</a>
+<a class="home_button" href="./">Return to Main Page</a>
+
+{% endblock %}

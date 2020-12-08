@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <h1>{{ message }}</h1>
+{% endfor %}
+
+<!-- ADD NEW DOCTOR -->
+<br><h2>Add New Doctor</h2>
+<form id="add_doctor" action="./add_doctors" method="POST">
+    <fieldset>
+        <legend>Doctor Details</legend>
+        <fieldset>
+            <label>First Name:</label>
+            <input type="text" name="fname" required>
+            <label>Last Name:</label>
+            <input type="text" name="lname" required>
+            <label>Department:</label>
+            <input type="text" name="department" required>
+        </fieldset>
+        <br />
+        <input class="bottom_button" type="submit" value="Add Doctor" id="add_doc">
+    </fieldset>
+</form>
+
+<a class="home_button" href="./doctors">Return to Doctors Page</a>
+<a class="home_button" href="./">Return to Main Page</a>
+
+
+{% endblock %}

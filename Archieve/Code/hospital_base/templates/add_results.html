@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <h1>{{ message }}</h1>
+{% endfor %}
+
+<!-- ADD NEW RESULT -->
+<br><h2>Add New Result</h2>
+<form id="addresults" action="/add_results" method="post">
+    <fieldset>
+        <legend>Result Details</legend>
+        <fieldset>
+        <label>Patient's Last Name - OrderType:</label>
+        <br />
+        <select name="orderID" id="orderID" required>
+          <!-- Patient Name and Order Type Are listed in Dropdown -->
+          {% for p in orders %}
+          <option value="{{ p[0] }}">{{ p[1] }} - {{ p[2] }}</option>
+        {% endfor %}
+        </select>
+        </fieldset>
+        <br />
+        <fieldset>
+        <label>Accessed by Doctor:</label>
+        <input type="radio" name="access" value= '1' required>Yes
+        <input type="radio" name="access" value= '0' >No
+        </fieldset>
+        <br />
+        <fieldset>
+        <label>Status (Fulfilled or Pending:Reason?):</label>
+        <input type="text" name="status" required>
+        </fieldset>
+        <br />
+    <fieldset>
+      <label>Date:</label>
+      <input id="today" type="date" name="date" required>
+    </fieldset>
+        <br />
+        <input class="bottom_button" type="submit" value="Add Result" id="add_res"/>
+    </fieldset>
+    </form>
+    <a class="home_button" href="./">Return to Main Page</a>
+    <a class="home_button" href="./results">Return to Results Page</a>
+<script>
+  var myDate = new Date();
+  var today = new Date().toISOString().substr(0, 10);
+  document.getElementById("today").value = today;
+  </script>
+{% endblock %}

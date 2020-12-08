@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Search DOCTOR -->
+<br><h2>Search Doctors</h2>
+<form id="search_doctors" action="" method="POST">
+    <fieldset>
+        <legend>Doctor Details</legend>
+        <fieldset>
+            <label>First Name/Last Name:</label>
+            <input type="text" name="search_data" required>
+        </fieldset>
+        <br />
+        <input class="bottom_button" type="submit" value="Search Doctor" id="sear_doc">
+    </fieldset>
+</form>
+
+<a class="home_button" href="./doctors">Return to Doctors Page</a>
+<a class="home_button" href="./">Return to Main Page</a>
+
+
+{% endblock %}

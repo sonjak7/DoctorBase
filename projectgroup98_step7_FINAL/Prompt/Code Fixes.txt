@@ -1,2 +1,0 @@
-
-5. (if time permits) Fix Title colors and overall site aesthetics
