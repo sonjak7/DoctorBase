@@ -103,7 +103,8 @@ INSERT INTO `Doctors` VALUES
 (2,'Mukherjee','Siddharth', 'Oncology'),
 (3,'Gawande','Atul', 'Endocrinology'),
 (4,'Sacks','Oliver', 'Neurology'),
-(5,'of Kos','Hippocrates', 'Internal Medicine');
+(5,'of Kos','Hippocrates', 'Internal Medicine'),
+(6, 'Disrespect', 'Dr', 'Gaming');
 UNLOCK TABLES;
 
 /* Insert into Patients --> 5 patients */

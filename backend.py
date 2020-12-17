@@ -36,15 +36,6 @@ def add_doctors():
 
     # once add doctor form has been submitted
     elif request.method == 'POST':
-        # print("Adding new doctor")
-        # fname = request.form['fname']
-        # lname = request.form['lname']
-        # department = request.form['department']
-        # query = 'INSERT INTO Doctors (lastName, firstName, department) VALUES (%s,%s,%s)' % (lname, fname, department)
-        # data = (lname, fname, department)
-        # execute_query(db_connection, query, data)
-
-
         cur = mysql.connection.cursor()
         fname = request.form['fname']
         lname = request.form['lname']
@@ -52,16 +43,6 @@ def add_doctors():
         cur.execute("INSERT INTO Doctors(lastName, firstName, department) VALUES (%s, %s, %s)", (lname, fname, department))
         mysql.connection.commit()
         cur.close()
-
-        # details = request.form
-        # firstName = details['fname']
-        # lastName = details['lname']
-        # cur = mysql.connection.cursor()
-        # cur.execute("INSERT INTO MyUsers(firstName, lastName) VALUES (%s, %s)", (firstName, lastName))
-        # mysql.connection.commit()
-        # cur.close()
-        # return 'success'
-
         flash('Doctor Added!')
         return render_template('add_doctors.html')
 
@@ -72,13 +53,6 @@ def search_doctors():
     if request.method == "POST":
         print("Searching for a Doctor")
         search_data = request.form['search_data']
-
-        # db_connection = connect_to_database()
-        # # search by firstName or lastName
-        # query = "SELECT * FROM Doctors WHERE firstName LIKE %s OR lastName LIKE %s"
-        # data = (search_data, search_data)
-        # result = execute_query(db_connection, query, data).fetchall()
-
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM Doctors WHERE firstName LIKE %s OR lastName LIKE %s", (search_data, search_data))
         result = cur.fetchall()
@@ -119,11 +93,6 @@ def update_doctors(doctorID):
     # pre-fill a form with information about doctor
      if request.method == 'GET':     #gather current doctor's information(to fill into text fields)
         print("Updating Doctor")
-         
-        #  db_connection = connect_to_database()
-        #  query = 'SELECT * FROM Doctors WHERE doctorID = %s' % (doctorID)
-        #  result = execute_query(db_connection, query).fetchall()
-
         cur = mysql.connection.cursor()
         cur.execute('SELECT * FROM Doctors WHERE doctorID = %s' % (doctorID))
         result = cur.fetchall()
@@ -132,15 +101,6 @@ def update_doctors(doctorID):
         return render_template('update_doctors.html', doctor=result[0])
 
      elif request.method == 'POST':  #update doctor and return back to all doctors
-        #  db_connection = connect_to_database()
-        #  doctorID = request.form['doctorID']
-        #  fname = request.form['fname']
-        #  lname = request.form['lname']
-        #  department = request.form['department']
-        #  query = 'UPDATE Doctors SET firstName = %s, lastName = %s, department = %s WHERE doctorID = %s'
-        #  data = (fname, lname, department, doctorID)
-        #  execute_query(db_connection, query, data).fetchall()
-
         cur = mysql.connection.cursor()
         doctorID = request.form['doctorID']
         fname = request.form['fname']
@@ -166,9 +126,6 @@ def add_patients():
     if request.method == 'GET':
         # to create a dropdown list of doctors
 
-        # query = 'SELECT doctorID, firstName, lastName FROM Doctors'
-        # result = execute_query(db_connection, query)
-
         cur = mysql.connection.cursor()
         query = 'SELECT doctorID, firstName, lastName FROM Doctors'
         cur.execute(query)
@@ -179,14 +136,6 @@ def add_patients():
     # submitting new patient to Patients table
     elif request.method == 'POST':
         print("Adding new patient")
-
-        # fname = request.form['fname']
-        # lname = request.form['lname']
-        # primaryDocID = request.form['primaryDocID']
-        # query = 'INSERT INTO Patients (lastName, firstName, primaryDoctorID) VALUES (%s,%s,%s)'
-        # data = (lname, fname, primaryDocID)
-        # execute_query(db_connection, query, data)
-
         cur = mysql.connection.cursor()
         fname = request.form['fname']
         lname = request.form['lname']
@@ -205,13 +154,6 @@ def search_patients():
     if request.method == "POST":
         print("Searching for a Patient")
         search_data = request.form['search_data']
-
-        # db_connection = connect_to_database()
-        # # search by firstName or lastName
-        # query = "SELECT p.patientID, p.firstName, p.lastName, d.lastName FROM Patients p INNER JOIN Doctors d ON p.primaryDoctorID = d.doctorID WHERE p.firstName LIKE %s OR p.lastName LIKE %s"
-        # data = (search_data, search_data)
-        # result = execute_query(db_connection, query, data).fetchall()
-
         cur = mysql.connection.cursor()
         cur.execute("SELECT p.patientID, p.firstName, p.lastName, d.lastName FROM Patients p INNER JOIN Doctors d ON p.primaryDoctorID = d.doctorID WHERE p.firstName LIKE %s OR p.lastName LIKE %s", (search_data, search_data))
         result = cur.fetchall()
@@ -227,11 +169,6 @@ def search_patients():
 @webapp.route('/browse_patients')
 def browse_patients():
     print("Browsing all Patients")
-
-    # db_connection = connect_to_database()
-    # query = "SELECT p.patientID, p.firstName, p.lastName, CONCAT(d.firstName , ' ' , d.lastName) FROM Patients p INNER JOIN Doctors d ON p.primaryDoctorID = d.doctorID"
-    # result = execute_query(db_connection, query).fetchall()
-
     cur = mysql.connection.cursor()
     query = "SELECT p.patientID, p.firstName, p.lastName, CONCAT(d.firstName , ' ' , d.lastName) FROM Patients p INNER JOIN Doctors d ON p.primaryDoctorID = d.doctorID"
     cur.execute(query)
@@ -245,12 +182,6 @@ def browse_patients():
 @webapp.route('/delete_patients', methods=['POST'])
 def delete_patients():
     print("Deleting a Patient")
-
-    #  db_connection = connect_to_database()
-    #  patientID = request.form['patientID']
-    #  query = "DELETE FROM Patients WHERE patientID = %s" % (patientID)
-    #  execute_query(db_connection, query).fetchall()
-
     cur = mysql.connection.cursor()
     patientID = request.form['patientID']
     query = "DELETE FROM Patients WHERE patientID = %s" % (patientID)    
@@ -260,22 +191,13 @@ def delete_patients():
 
     flash('Patient Deleted!')
     return redirect('/browse_patients')
-
+    
 
 # update patient in the database
 @webapp.route('/update_patients/<int:patientID>', methods=['POST','GET'])
 def update_patients(patientID):
      if request.method == 'GET':     #gather current patients's information(to fill into text fields)
         print("Updating Patient")
-
-
-        #  db_connection = connect_to_database()
-        #  patient_query = 'SELECT * FROM Patients WHERE patientID = %s' % (patientID)
-        #  patient_result = execute_query(db_connection, patient_query).fetchall()
-        #  doctor_query = 'SELECT doctorID, firstName, lastName FROM Doctors'
-        #  doctor_result = execute_query(db_connection, doctor_query).fetchall()
-
-
         cur = mysql.connection.cursor()
         patient_query = 'SELECT * FROM Patients WHERE patientID = %s' % (patientID)
         cur.execute(patient_query)
@@ -288,16 +210,6 @@ def update_patients(patientID):
         return render_template('update_patients.html', patient=patient_result[0], doctors=doctor_result)
 
      elif request.method == 'POST':  #update patient and return back to all patients
-
-        #  db_connection = connect_to_database()
-        #  patientID = request.form['patientID']
-        #  fname = request.form['fname']
-        #  lname = request.form['lname']
-        #  primary = request.form['primary']
-        #  query = 'UPDATE Patients SET firstName = %s, lastName = %s, primaryDoctorID = %s WHERE patientID = %s'
-        #  data = (fname, lname, primary, patientID)
-        #  execute_query(db_connection, query, data).fetchall()
-
         cur = mysql.connection.cursor()
         patientID = request.form['patientID']
         fname = request.form['fname']
@@ -325,14 +237,6 @@ def add_staff():
         return render_template('add_staff.html')
     elif request.method == 'POST':
         print("Add new people!")
-
-        # fname = request.form['fname']
-        # lname = request.form['lname']
-        # type = request.form['type']
-        # query = 'INSERT INTO Staff (firstName, lastName, staffType) VALUES (%s,%s,%s)'
-        # data = (fname, lname, type)
-        # execute_query(db_connection, query, data)
-
         cur = mysql.connection.cursor()
         fname = request.form['fname']
         lname = request.form['lname']
@@ -345,41 +249,25 @@ def add_staff():
         return render_template('add_staff.html')
 
 
-
 # search a staff by their first name or last name
 @webapp.route('/search_staff', methods=['GET', 'POST'])
 def search_staff():
     if request.method == "POST":
-
         search_data = request.form['search_data']
-
-        # db_connection = connect_to_database()
-        # # search by firstName or lastName
-        # query = "SELECT firstName, lastName, staffType, staffID from Staff WHERE firstName LIKE %s OR lastName LIKE %s"
-        # data = (search_data, search_data)
-        # result = execute_query(db_connection, query, data).fetchall()
-
         cur = mysql.connection.cursor()
         cur.execute("SELECT firstName, lastName, staffType, staffID from Staff WHERE firstName LIKE %s OR lastName LIKE %s", (search_data, search_data))
         result = cur.fetchall()
         cur.close()
-
         count = len(result)
         flash(str(count) + " Staff Found!")
         return render_template('browse_staff.html', rows=result)
     return render_template('search_staff.html')
 
 
-
 # display all the attributes for each row in the staff table
 @webapp.route('/browse_staff')
 def browse_staff():
     print("Fetching and rendering Staff web page")
-
-    # db_connection = connect_to_database()
-    # query = "SELECT firstName, lastName, staffType, staffID from Staff;"
-    # result = execute_query(db_connection, query).fetchall()
-
     cur = mysql.connection.cursor()
     query = "SELECT firstName, lastName, staffType, staffID from Staff;"
     cur.execute(query)
@@ -392,13 +280,8 @@ def browse_staff():
 # update the staff with id passed in the url
 @webapp.route('/update_staff/<int:id>', methods=['POST','GET'])
 def update_staff(id):
-    # db_connection = connect_to_database()
-
     #display existing data about a staff
     if request.method == 'GET':
-        # staff_query = "SELECT firstName, lastName, staffType, staffID from Staff WHERE staffID = %s" % (id)
-        # staff_result = execute_query(db_connection, staff_query).fetchone()
-
         cur = mysql.connection.cursor()
         staff_query = "SELECT firstName, lastName, staffType, staffID from Staff WHERE staffID = %s" % (id)
         cur.execute(staff_query)
@@ -412,14 +295,6 @@ def update_staff(id):
         return render_template('update_staff.html', staff = staff_result[0])
     # update staff and show the change in the browse staff page
     elif request.method == 'POST':
-        # staffID = request.form['staffID']
-        # firstName = request.form['firstName']
-        # lastName = request.form['lastName']
-        # staffType = request.form['staffType']
-        # query = "UPDATE Staff SET firstName = %s, lastName = %s, staffType = %s WHERE staffID = %s"
-        # data = (firstName, lastName, staffType, staffID)
-        # result = execute_query(db_connection, query, data)
-
         cur = mysql.connection.cursor()
         staffID = request.form['staffID']
         firstName = request.form['firstName']
@@ -428,9 +303,7 @@ def update_staff(id):
         cur.execute("UPDATE Staff SET firstName = %s, lastName = %s, staffType = %s WHERE staffID = %s", (firstName, lastName, staffType, staffID))
         mysql.connection.commit()
         cur.close()
-
         flash("Updated! " + " Staff ID #" + str(staffID))
-
         return redirect('/browse_staff')
 
 
@@ -438,11 +311,6 @@ def update_staff(id):
 @webapp.route('/delete_staff/<int:id>')
 def delete_people(id):
     '''deletes a staff with the given id'''
-    # db_connection = connect_to_database()
-    # query = "DELETE FROM Staff WHERE staffID = %s"
-    # data = (id,)
-    # result = execute_query(db_connection, query, data)
-
     cur = mysql.connection.cursor()
     query = "DELETE FROM Staff WHERE staffID = %s" % (id)
     cur.execute(query)
@@ -462,12 +330,6 @@ def orders():
 # allows users to add orders
 @webapp.route('/add_orders', methods=['POST','GET'])
 def add_orders():
-    # db_connection = connect_to_database()
-    # query_patients = "SELECT Patients.patientID, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient FROM Patients"
-    # query_doc = "SELECT Doctors.doctorID, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor FROM Doctors"
-    # result_patients = execute_query(db_connection, query_patients).fetchall()
-    # result_doc = execute_query(db_connection, query_doc).fetchall()
-
     cur = mysql.connection.cursor()
     query_patients = "SELECT Patients.patientID, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient FROM Patients"
     query_doc = "SELECT Doctors.doctorID, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor FROM Doctors"
@@ -489,21 +351,13 @@ def add_orders():
         time = request.form['time']
 
         # get patient from database
-        # qp = "SELECT patientID, primaryDoctorID from Patients WHERE patientID = %s"
-        # dp = (patientID,)
-        # rp = execute_query(db_connection, qp, dp).fetchall()
-
         cur = mysql.connection.cursor()
         qp = "SELECT patientID, primaryDoctorID from Patients WHERE patientID = %s" % (patientID)
         cur.execute(qp)
         rp = cur.fetchall()
         cur.close()
 
-        # # get doctor from database
-        # qd = "SELECT doctorID from Doctors WHERE doctorID = %s"
-        # dd = (doctorID,)
-        # rd = execute_query(db_connection, qd, dd).fetchall()
-
+        # get doctor from database
         cur = mysql.connection.cursor()
         qd = "SELECT doctorID from Doctors WHERE doctorID = %s" % (doctorID)
         cur.execute(qd)
@@ -515,10 +369,6 @@ def add_orders():
             flash( "Failed: Doctor is not Patient's Primary Physician!")
             return render_template('add_orders.html', patients = result_patients, doctors = result_doc)
         else:
-            # qo = 'INSERT INTO Orders (date, time, orderType, patientID, doctorID) VALUES (%s,%s,%s,%s,%s)'
-            # do = (date, time, ordertype, rp[0][0], rd[0][0])
-            # execute_query(db_connection, qo, do)
-
             cur = mysql.connection.cursor()
             cur.execute('INSERT INTO Orders (date, time, orderType, patientID, doctorID) VALUES (%s,%s,%s,%s,%s)', (date, time, ordertype, rp[0][0], rd[0][0]))
             mysql.connection.commit()
@@ -532,20 +382,11 @@ def add_orders():
 @webapp.route('/search_orders', methods=['GET', 'POST'])
 def search_orders():
     if request.method == "POST":
-
         search_data = request.form['search_data']
-
-        # db_connection = connect_to_database()
-        # # search by firstName or lastName
-        # query = "SELECT Orders.orderID, Orders.date, Orders.time, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff FROM Patients JOIN Orders ON Patients.patientID = Orders.patientID  AND (Patients.firstName LIKE %s OR Patients.lastName LIKE %s) LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON  Staff.staffID = Orders.staffID"
-        # data = (search_data, search_data)
-        # result = execute_query(db_connection, query, data).fetchall()
-
         cur = mysql.connection.cursor()
         cur.execute("SELECT Orders.orderID, Orders.date, Orders.time, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff FROM Patients JOIN Orders ON Patients.patientID = Orders.patientID  AND (Patients.firstName LIKE %s OR Patients.lastName LIKE %s) LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON  Staff.staffID = Orders.staffID", (search_data, search_data))
         result = cur.fetchall()
         cur.close()
-
         count = len(result)
         flash(str(count) + " Orders Found!")
         return render_template('browse_orders.html', rows=result)
@@ -554,11 +395,6 @@ def search_orders():
 @webapp.route('/browse_orders')
 def browse_orders():
     print("Fetching and rendering Orders web page")
-
-    # db_connection = connect_to_database()
-    # query = "SELECT Orders.orderID, Orders.date, Orders.time, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff FROM Orders LEFT JOIN Patients ON Orders.patientID = Patients.patientID LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON Orders.staffID = Staff.staffID;"
-    # result = execute_query(db_connection, query).fetchall()
-
     cur = mysql.connection.cursor()
     query = "SELECT Orders.orderID, Orders.date, Orders.time, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff FROM Orders LEFT JOIN Patients ON Orders.patientID = Patients.patientID LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON Orders.staffID = Staff.staffID;"
     cur.execute(query)
@@ -570,23 +406,13 @@ def browse_orders():
 # allows user to update one order at a time
 @webapp.route('/update_order/<int:id>', methods=['POST','GET'])
 def update_order(id):
-    # db_connection = connect_to_database()
-
     #display existing data about an order
     if request.method == 'GET':
-        # order_query = "SELECT Orders.orderID, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff, Orders.staffID, Orders.patientID FROM Patients JOIN Orders ON (Patients.patientID = Orders.patientID  AND Orders.orderID = %s) LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON  Staff.staffID = Orders.staffID"
-        # data = (id,)
-        # order_result = execute_query(db_connection, order_query, data).fetchone()
-
         cur = mysql.connection.cursor()
         order_query = "SELECT Orders.orderID, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff, Orders.staffID, Orders.patientID FROM Patients JOIN Orders ON (Patients.patientID = Orders.patientID  AND Orders.orderID = %s) LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON  Staff.staffID = Orders.staffID" % (id)
         cur.execute(order_query)
         order_result = cur.fetchall()
         cur.close()
-
-        # staff_query = "SELECT staffID, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff FROM Staff;"
-        # staff_results = execute_query(db_connection, staff_query).fetchall()
-
         cur = mysql.connection.cursor()
         staff_query = "SELECT staffID, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff FROM Staff;"
         cur.execute(staff_query)
@@ -602,21 +428,12 @@ def update_order(id):
         patientID = request.form['patientID']
 
         # update orders table
-        # query = "UPDATE Orders SET staffID = %s WHERE orderID = %s"
-        # data = (staffID, orderID)
-        # result = execute_query(db_connection, query, data)
-
         cur = mysql.connection.cursor()
         cur.execute("UPDATE Orders SET staffID = %s WHERE orderID = %s", (staffID, orderID))
         mysql.connection.commit()
         cur.close()
 
-
         # check if relation is old and update if it is
-        # qold = 'SELECT staffID, patientID FROM Staff_Patients WHERE staffID = %s and patientID = %s'
-        # dold = (oldstaffID, patientID)
-        # rold = execute_query(db_connection, qold, dold).fetchone()
-
         cur = mysql.connection.cursor()
         cur.execute('SELECT staffID, patientID FROM Staff_Patients WHERE staffID = %s and patientID = %s', (oldstaffID, patientID))
         rold = cur.fetchall()
@@ -624,10 +441,6 @@ def update_order(id):
 
         # update staff_patients table if relation already exits
         if rold is not None:
-            # qupd = 'UPDATE Staff_Patients SET staffID = %s WHERE staffID = %s AND patientID = %s'
-            # dupd = (staffID, oldstaffID, patientID)
-            # execute_query(db_connection, qupd, dupd)
-
             cur = mysql.connection.cursor()
             cur.execute('UPDATE Staff_Patients SET staffID = %s WHERE staffID = %s AND patientID = %s', (staffID, oldstaffID, patientID))
             mysql.connection.commit()
@@ -636,10 +449,6 @@ def update_order(id):
         # add new relation to staff_patients table if relation is new
         else:
             # check if new relation already exits, add if it doesn't
-            # qnew = 'SELECT staffID, patientID FROM Staff_Patients WHERE staffID = %s and patientID = %s'
-            # dnew = (staffID, patientID)
-            # rnew = execute_query(db_connection, qnew, dnew).fetchone()
-
             cur = mysql.connection.cursor()
             cur.execute('SELECT staffID, patientID FROM Staff_Patients WHERE staffID = %s and patientID = %s', (staffID, patientID))
             rnew = cur.fetchall()
@@ -661,11 +470,6 @@ def update_order(id):
 @webapp.route('/delete_order/<int:id>')
 def delete_order(id):
     '''deletes an order with the given id'''
-    # db_connection = connect_to_database()
-    # query = "DELETE FROM Orders WHERE orderID = %s"
-    # data = (id,)
-    # result = execute_query(db_connection, query, data)
-
     cur = mysql.connection.cursor()
     query = "DELETE FROM Orders WHERE orderID = %s" % (id)
     cur.execute(query)
@@ -684,16 +488,11 @@ def results():
 # allows user to add a result for an order in database
 @webapp.route('/add_results', methods=['POST','GET'])
 def add_results():
-    # db_connection = connect_to_database()
-    # q1 = 'SELECT Orders.orderID, Patients.lastName, Orders.orderType from Orders JOIN Patients ON Orders.patientID = Patients.patientID'
-    # r1 = execute_query(db_connection, q1).fetchall()
-
     cur = mysql.connection.cursor()
     q1 = 'SELECT Orders.orderID, Patients.lastName, Orders.orderType from Orders JOIN Patients ON Orders.patientID = Patients.patientID'
     cur.execute(q1)
     r1 = cur.fetchall()
     cur.close()
-
 
     # pre-fill form with order details
     if request.method == 'GET':
@@ -707,10 +506,6 @@ def add_results():
         date = request.form['date']
 
         # check if order already has a result
-        # qo = 'SELECT orderID FROM Results WHERE orderID = %s'
-        # do = (orderID,)
-        # ro = execute_query(db_connection, qo, do).fetchall()
-
         cur = mysql.connection.cursor()
         qo = 'SELECT orderID FROM Results WHERE orderID = %s' % (orderID)
         cur.execute(qo)
@@ -723,10 +518,6 @@ def add_results():
             flash( "Failed: Result for Order Already Exits! Please Update Result!")
             return render_template('add_results.html', orders = r1)
         else:
-            # query = 'INSERT INTO Results (status, orderID, date, accessedByDoctor) VALUES (%s,%s,%s,%s)'
-            # data = (status, orderID, date, int(access))
-            # execute_query(db_connection, query, data)
-
             cur = mysql.connection.cursor()
             cur.execute('INSERT INTO Results (status, orderID, date, accessedByDoctor) VALUES (%s,%s,%s,%s)', (status, orderID, date, int(access)))
             mysql.connection.commit()
@@ -745,13 +536,7 @@ def search_results():
         doc_access = int(request.form['doc_access'])
         filter_status_mod = "%"+filter_status+"%"
 
-        # db_connection = connect_to_database()
-
         # filter by access and status
-        # query = "SELECT resultID, status, Results.orderID, Results.date, CASE WHEN accessedByDoctor = 1 THEN 'YES' ELSE 'NO' END AS accessedByDoctor, orderType, Patients.lastName FROM Results JOIN Orders ON Results.orderID = Orders.orderID AND Results.accessedByDoctor = %s AND Results.status LIKE %s JOIN Patients ON Orders.patientID = Patients.patientID"
-        # data = (doc_access, filter_status_mod)
-        # result = execute_query(db_connection, query, data).fetchall()
-
         cur = mysql.connection.cursor()
         cur.execute("SELECT resultID, status, Results.orderID, Results.date, CASE WHEN accessedByDoctor = 1 THEN 'YES' ELSE 'NO' END AS accessedByDoctor, orderType, Patients.lastName FROM Results JOIN Orders ON Results.orderID = Orders.orderID AND Results.accessedByDoctor = %s AND Results.status LIKE %s JOIN Patients ON Orders.patientID = Patients.patientID", (doc_access, filter_status_mod))
         result = cur.fetchall()
@@ -766,10 +551,6 @@ def search_results():
 # displays all the results in the database
 @webapp.route('/browse_results')
 def browse_results():
-    # db_connection = connect_to_database()
-    # query = "SELECT resultID, status, Results.orderID, Results.date, CASE WHEN accessedByDoctor = 1 THEN 'YES' ELSE 'NO' END AS accessedByDoctor, orderType, Patients.lastName FROM Results JOIN Orders ON Results.orderID = Orders.orderID JOIN Patients ON Orders.patientID = Patients.patientID;"
-    # result = execute_query(db_connection, query).fetchall()
-
     cur = mysql.connection.cursor()
     query = "SELECT resultID, status, Results.orderID, Results.date, CASE WHEN accessedByDoctor = 1 THEN 'YES' ELSE 'NO' END AS accessedByDoctor, orderType, Patients.lastName FROM Results JOIN Orders ON Results.orderID = Orders.orderID JOIN Patients ON Orders.patientID = Patients.patientID;"
     cur.execute(query)
@@ -782,17 +563,8 @@ def browse_results():
 # updates access and status of result
 @webapp.route('/update_result/<int:id_r>/<int:id_o>', methods=['POST','GET'])
 def update_result(id_r, id_o):
-    # db_connection = connect_to_database()
-
     #display existing data
     if request.method == 'GET':
-
-        # result_query = "SELECT resultID, status, date, accessedByDoctor from Results WHERE resultID = %s" % (id_r)
-        # order_query = "SELECT Orders.orderID, Orders.orderType, CONCAT(Patients.firstName , ' ' , Patients.lastName) AS Patient, CONCAT(Doctors.firstName , ' ' , Doctors.lastName) AS Doctor, CONCAT(Staff.firstName , ' ' , Staff.lastName) AS Staff, Orders.staffID FROM Patients JOIN Orders ON (Patients.patientID = Orders.patientID  AND Orders.orderID = %s) LEFT JOIN Doctors ON Orders.doctorID = Doctors.doctorID LEFT JOIN Staff ON  Staff.staffID = Orders.staffID"
-        # order_data = (id_o,)
-        # result_result = execute_query(db_connection, result_query).fetchone()
-        # order_result = execute_query(db_connection, order_query, order_data).fetchone()
-
         cur = mysql.connection.cursor()
         result_query = "SELECT resultID, status, date, accessedByDoctor from Results WHERE resultID = %s" % (id_r)
         cur.execute(result_query)
@@ -814,11 +586,6 @@ def update_result(id_r, id_o):
         status = request.form['status']
         access = request.form['access']
         date = request.form['date']
-
-        # query = "UPDATE Results SET status = %s, accessedByDoctor = %s, date = %s WHERE resultID = %s"
-        # data = (status, int(access), date, resultID)
-        # result = execute_query(db_connection, query, data)
-
         cur = mysql.connection.cursor()
         cur.execute("UPDATE Results SET status = %s, accessedByDoctor = %s, date = %s WHERE resultID = %s", (status, int(access), date, resultID))
         mysql.connection.commit()
@@ -833,11 +600,6 @@ def update_result(id_r, id_o):
 @webapp.route('/delete_result/<int:id>')
 def delete_result(id):
     '''deletes a result with the given id'''
-    # db_connection = connect_to_database()
-    # query = "DELETE FROM Results WHERE resultID = %s"
-    # data = (id,)
-    # result = execute_query(db_connection, query, data)
-
     cur = mysql.connection.cursor()
     query = "DELETE FROM Results WHERE resultID = %s" % (id)
     cur.execute(query)
@@ -848,7 +610,6 @@ def delete_result(id):
 
     return redirect('/browse_results')
 
-
 # interface for staff_patients relationship
 @webapp.route('/staff_patients')
 def staff_patients():
@@ -858,13 +619,7 @@ def staff_patients():
 # allows user to add new relationship
 @webapp.route('/add_staff_patients', methods=['POST','GET'])
 def add_staff_patients():
-    # db_connection = connect_to_database()
     if request.method == 'GET':
-        # patient_query = 'SELECT patientID, firstName, lastName FROM Patients'
-        # patient_result = execute_query(db_connection, patient_query)
-        # staff_query = 'SELECT staffID, firstName, lastName FROM Staff'
-        # staff_result = execute_query(db_connection, staff_query)
-
         cur = mysql.connection.cursor()
         patient_query = 'SELECT patientID, firstName, lastName FROM Patients'
         cur.execute(patient_query)
@@ -882,20 +637,12 @@ def add_staff_patients():
         pat_id = request.form['pat_id']
 
         # check if relation already exists
-        # qo = 'SELECT staffID, patientID FROM Staff_Patients WHERE staffID = %s and patientID = %s'
-        # do = (staf_id, pat_id)
-        # ro = execute_query(db_connection, qo, do).fetchone()
-
         cur = mysql.connection.cursor()
         cur.execute('SELECT staffID, patientID FROM Staff_Patients WHERE staffID = %s and patientID = %s', (staf_id, pat_id))
         ro = cur.fetchall()
         cur.close()
 
         if ro == ():
-            # query = 'INSERT INTO Staff_Patients (staffID, patientID) VALUES (%s,%s)'
-            # data = (staf_id, pat_id)
-            # execute_query(db_connection, query, data)
-
             cur = mysql.connection.cursor()
             cur.execute('INSERT INTO Staff_Patients (staffID, patientID) VALUES (%s,%s)', (staf_id, pat_id))
             mysql.connection.commit()
@@ -911,11 +658,6 @@ def add_staff_patients():
 @webapp.route('/browse_staff_patients')
 def browse_staff_patients():
     print("Browsing all staff-patient relationships")
-
-    # db_connection = connect_to_database()
-    # query = "SELECT d.staffID, CONCAT(d.firstName, ' ', d.lastName), p.patientID, CONCAT(p.firstName, ' ', p.lastName) FROM Staff_Patients dp INNER JOIN Staff d ON d.staffID = dp.staffID INNER JOIN Patients p ON p.patientID = dp.patientID"
-    # result = execute_query(db_connection, query).fetchall()
-
     cur = mysql.connection.cursor()
     query = "SELECT d.staffID, CONCAT(d.firstName, ' ', d.lastName), p.patientID, CONCAT(p.firstName, ' ', p.lastName) FROM Staff_Patients dp INNER JOIN Staff d ON d.staffID = dp.staffID INNER JOIN Patients p ON p.patientID = dp.patientID"
     cur.execute(query)
@@ -929,15 +671,8 @@ def browse_staff_patients():
 @webapp.route('/delete_staff_patients', methods=['POST'])
 def delete_staff_patients():
     print("Deleting a Relationship")
-
-    # db_connection = connect_to_database()
     staffID = request.form['staffID']
     patientID = request.form['patientID']
-
-    # query = "DELETE FROM Staff_Patients WHERE staffID = %s AND patientID = %s"
-    # data = (staffID, patientID)
-    # execute_query(db_connection, query, data).fetchall()
-
     cur = mysql.connection.cursor()
     cur.execute("DELETE FROM Staff_Patients WHERE staffID = %s AND patientID = %s", (staffID, patientID))
     mysql.connection.commit()
@@ -952,13 +687,6 @@ def delete_staff_patients():
 def update_staff_patients(staffID, patientID):
     if request.method == 'GET':     #gather current patients's information(to fill into text fields)
         print("Updating Relationship")
-
-        # db_connection = connect_to_database()
-        # patient_query = 'SELECT patientID, firstName, lastName FROM Patients'
-        # patient_result = execute_query(db_connection, patient_query)
-        # staff_query = 'SELECT staffID, firstName, lastName FROM Staff'
-        # staff_result = execute_query(db_connection, staff_query)
-
         cur = mysql.connection.cursor()
         patient_query = 'SELECT patientID, firstName, lastName FROM Patients'
         cur.execute(patient_query)
@@ -971,26 +699,16 @@ def update_staff_patients(staffID, patientID):
         return render_template('update_staff_patients.html', staffID=staffID, patientID=patientID, staff=staff_result, patients=patient_result)
 
     elif request.method == 'POST':  #update relationship and return back to all relationships
-        # db_connection = connect_to_database()
         oldStaffID = request.form['oldStaffID']
         oldPatientID = request.form['oldPatientID']
         staffID = request.form['staffID']
         patientID = request.form['patientID']
-
-        # qo = 'SELECT staffID, patientID FROM Staff_Patients WHERE staffID = %s and patientID = %s'
-        # do = (staffID, patientID)
-        # ro = execute_query(db_connection, qo, do).fetchone()
-
         cur = mysql.connection.cursor()
         cur.execute('SELECT staffID, patientID FROM Staff_Patients WHERE staffID = %s and patientID = %s', (staffID, patientID))
         ro = cur.fetchall()
         cur.close()
 
         if ro == ():
-            # query = 'UPDATE Staff_Patients SET staffID = %s, patientID = %s WHERE staffID = %s AND patientID = %s'
-            # data = (staffID, patientID, oldStaffID, oldPatientID)
-            # execute_query(db_connection, query, data).fetchall()
-
             cur = mysql.connection.cursor()
             cur.execute('UPDATE Staff_Patients SET staffID = %s, patientID = %s WHERE staffID = %s AND patientID = %s', (staffID, patientID, oldStaffID, oldPatientID))
             mysql.connection.commit()
@@ -998,11 +716,6 @@ def update_staff_patients(staffID, patientID):
 
             flash('Relationship Updated!')
             return redirect('/browse_staff_patients')
-
-        # query = "DELETE FROM Staff_Patients WHERE staffID = %s AND patientID = %s"
-        # data = (oldStaffID, oldPatientID)
-        # execute_query(db_connection, query, data).fetchall()
-
         cur = mysql.connection.cursor()
         cur.execute("DELETE FROM Staff_Patients WHERE staffID = %s AND patientID = %s", (oldStaffID, oldPatientID))
         mysql.connection.commit()
