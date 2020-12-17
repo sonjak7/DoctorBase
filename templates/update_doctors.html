@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<br><h2>Update Doctor</h2>
+<form id="update_doctors" action="" method="POST">
+    <fieldset>
+        <legend>Doctor Details</legend>
+        <fieldset>
+            <input type="hidden" name="doctorID" value="{{ doctor[0] }}" required>
+            <label>First Name:</label>
+            <input type="text" name="fname" value="{{ doctor[2] }}" required>
+            <label>Last Name:</label>
+            <input type="text" name="lname" value="{{ doctor[1] }}" required>
+            <label>Department:</label>
+            <input type="text" name="department" value="{{ doctor[3] }}" required>
+        </fieldset><br>
+        <input class="bottom_button" type="submit" value="Update Doctor" id="update_doc">
+    </fieldset>
+</form>
+
+<a class="home_button" href="../browse_doctors">Return to All Doctors Page</a>
+
+{% endblock %}

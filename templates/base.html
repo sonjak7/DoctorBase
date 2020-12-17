@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Doctors/Patients/Orders/Staff/Results</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <img src="{{ url_for('static', filename='bus.jpg') }}">
+
+        <ul id="nav_bar">
+            <li id="site_name">HospitalBase</li>
+        </ul>
+        {% block content %}{% endblock %}
+    </body>
+</html>

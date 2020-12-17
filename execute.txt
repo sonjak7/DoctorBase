@@ -1,0 +1,10 @@
+Run this code on command line to execute the site temporarily:
+
+
+set FLASK_APP=backend.py
+flask run
+
+
+Start up local database through local server (like xampp)
+
+Access through browser on provided port
