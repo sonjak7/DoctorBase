@@ -1,6 +1,6 @@
 # DoctorBase
 A tracking tool for small hospitals with back-end and front-end implementation. Allows for manageability of doctors, patients, staff, orders, results, and staff-patient relationship. 
-Implemented through Flask, and MySQL database
+Implemented through Flask, and MySQL database.
 
 PREREQUISITES (to run locally)
 Download required packages through 'pip install Flask' and 'pip install flask_mysqldb' in working directory, upon installation of Python 3
