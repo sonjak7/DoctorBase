@@ -1,7 +1,5 @@
 # DoctorBase
-A tracking tool for small hospitals with back-end and front-end implementation. Allows for manageability of doctors, patients, staff, orders, results, and staff-patient relationship. 
-
-Implemented through Flask, and MySQL database.
+A tracking tool for small hospitals with back-end and front-end implementation. Allows for manageability of doctors, patients, staff, orders, results, and staff-patient relationship. Implemented through Flask, and MySQL database.
 
 
 PREREQUISITES (to run locally)
