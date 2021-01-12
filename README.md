@@ -1,6 +1,7 @@
 # HospitalBase
 A tracking tool for small hospitals with back-end and front-end implementation. Allows for manageability of doctors, patients, staff, orders, results, and staff-patient relationship. Implemented through Flask, and MySQL database.
 
+Preview the site through "preview_images" folder
 
 PREREQUISITES (to run locally)
 
